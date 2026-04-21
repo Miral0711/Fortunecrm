@@ -41,3 +41,7 @@ export interface PageConfig {
   subtitle?: string
   breadcrumbs?: { label: string; path?: string }[]
 }
+
+export type ResourceType = 'video' | 'document' | 'form' | 'ebook' | 'presentation'
+export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced'
+export type UserRole = 'Admin' | 'Agent' | 'Marketing'

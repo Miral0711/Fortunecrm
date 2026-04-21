@@ -1,5 +1,6 @@
-import { Bell, Search, Settings, ChevronDown, HelpCircle } from 'lucide-react'
+import { Bell, Search, HelpCircle, Settings } from 'lucide-react'
 import { useState } from 'react'
+import ProfileDropdown from './ProfileDropdown'
 
 interface Props {
   title: string
@@ -42,16 +43,7 @@ export default function Topbar({ title }: Props) {
           <Settings className="w-4 h-4" />
         </button>
 
-        <div className="flex items-center gap-2 ml-2 pl-3 border-l border-gray-100 cursor-pointer group">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-400 to-orange-600 flex items-center justify-center text-white text-xs font-bold">
-            A
-          </div>
-          <div className="hidden sm:block">
-            <p className="text-xs font-semibold text-gray-700 leading-none">Admin User</p>
-            <p className="text-[10px] text-gray-400 mt-0.5">Super Admin</p>
-          </div>
-          <ChevronDown className="w-3 h-3 text-gray-400 group-hover:text-gray-600 transition-colors" />
-        </div>
+        <ProfileDropdown />
       </div>
     </header>
   )

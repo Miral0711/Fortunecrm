@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import AppShell from './components/layout/AppShell'
 import DashboardPage from './pages/DashboardPage'
 import GenericPage from './pages/GenericPage'
+import LoginPage from './pages/LoginPage'
 
 // Accounts
 import ClientsPage from './pages/accounts/ClientsPage'
@@ -28,7 +29,6 @@ import WordPressPage from './pages/website/WordPressPage'
 
 // Other
 import OtherServicesPage from './pages/OtherServicesPage'
-import BotCategoryPage from './pages/BotCategoryPage'
 import BotInABoxPage from './pages/BotInABoxPage'
 import AffiliatesPage from './pages/accounts/AffiliatesPage'
 import SubscribersPage from './pages/accounts/SubscribersPage'
@@ -43,6 +43,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<LoginPage />} />
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
 
@@ -97,7 +98,6 @@ export default function App() {
           <Route path="mail-list" element={<GenericPage title="Mail List" subtitle="Email subscriber lists" />} />
           <Route path="mail-status" element={<GenericPage title="Mail Status" subtitle="Email delivery status" />} />
           <Route path="bot-in-a-box" element={<BotInABoxPage />} />
-          <Route path="bot-category" element={<BotCategoryPage />} />
           <Route path="ad-management" element={<GenericPage title="Ad Management" subtitle="Advertising campaign management" />} />
           <Route path="other-services" element={<OtherServicesPage />} />
 

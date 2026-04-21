@@ -4,7 +4,7 @@ import {
   Megaphone, Globe, FileText, Building, MapPin, Heart, Star, Home,
   TrendingUp, BarChart2, StickyNote, LogIn, Monitor, BookMarked, CheckSquare, History,
   Layers, FormInput, Search, ClipboardList, CreditCard,
-  Package, Send, Clock, Bot, Tag, Tv2, Settings2
+  Package, Send, Clock, Bot, Tv2, Settings2
 } from 'lucide-react'
 import type { NavGroup } from '../types'
 
@@ -108,7 +108,6 @@ export const navigation: NavGroup[] = [
       { label: 'Mail List', path: '/mail-list', icon: Send },
       { label: 'Mail Status', path: '/mail-status', icon: Clock },
       { label: 'Bot In A Box', path: '/bot-in-a-box', icon: Bot },
-      { label: 'Bot In A Box Category', path: '/bot-category', icon: Tag },
       { label: 'Ad Management', path: '/ad-management', icon: Tv2 },
       { label: 'Other Services', path: '/other-services', icon: Settings2 },
     ],
