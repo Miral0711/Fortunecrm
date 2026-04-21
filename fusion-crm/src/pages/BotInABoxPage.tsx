@@ -307,6 +307,7 @@ function CreateBotForm({ onBack }: { onBack: () => void }) {
   const [overview,       setOverview]       = useState('')
   const [thumbDesc,      setThumbDesc]      = useState('')
   const [visibility,     setVisibility]     = useState<string[]>([])
+  const [privacy,        setPrivacy]        = useState<'public' | 'private'>('public')
   const [iconFile,       setIconFile]       = useState<File | null>(null)
   const [prompts,        setPrompts]        = useState<ExamplePrompt[]>([])
   const fileRef = useRef<HTMLInputElement>(null)
@@ -419,6 +420,38 @@ function CreateBotForm({ onBack }: { onBack: () => void }) {
               </div>
             ))}
           </div>
+          {/* ── Public / Private ── */}
+          <div className="pt-2 space-y-1.5">
+            <label className="text-xs font-semibold text-gray-700">Access</label>
+            <div className="flex items-center gap-2">
+              {(['public', 'private'] as const).map(opt => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => setPrivacy(opt)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                    privacy === opt
+                      ? 'bg-orange-500 text-white border-orange-500'
+                      : 'bg-white text-gray-600 border-gray-200 hover:border-orange-300 hover:text-orange-600'
+                  }`}>
+                  {opt === 'public' ? (
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ) : (
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  )}
+                  {opt.charAt(0).toUpperCase() + opt.slice(1)}
+                </button>
+              ))}
+              <span className="text-[10px] text-gray-400">
+                {privacy === 'public' ? 'Visible to selected roles' : 'Only visible to admins'}
+              </span>
+            </div>
+          </div>
         </div>
 
         <div className="space-y-1.5">
@@ -491,9 +524,6 @@ export default function BotInABoxPage() {
   const search = useDebounce(rawSearch, 250)
   const PER_PAGE = 12
 
-  // Show create form instead of listing
-  if (showCreate) return <CreateBotForm onBack={() => setShowCreate(false)} />
-
   function toggleBot(id: string) {
     setBots(prev => prev.map(b => b.id === id
       ? { ...b, active: !b.active, statusLabel: !b.active ? 'Active' : 'Inactive', status: (!b.active ? 'success' : 'danger') as BadgeVariant }
@@ -560,6 +590,8 @@ export default function BotInABoxPage() {
   const activeCount    = bots.filter(b => b.active).length
   const inactiveCount  = bots.filter(b => !b.active).length
   const totalResponses = bots.reduce((s, b) => s + b.responses, 0)
+
+  if (showCreate) return <CreateBotForm onBack={() => setShowCreate(false)} />
 
   return (
     <div className="space-y-4">
