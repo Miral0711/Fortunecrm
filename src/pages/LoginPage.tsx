@@ -1,10 +1,11 @@
 import { useState, useCallback } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   Mail, Lock, Eye, EyeOff, ArrowRight, Loader2,
   Users, TrendingUp, Bot, CheckCircle2,
 } from 'lucide-react'
 import logoFull from '../../logo.png'
+import { useAuth } from '../context/AuthContext'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -120,6 +121,9 @@ function InputField({
 
 export default function LoginPage() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { login } = useAuth()
+  const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/dashboard'
 
   const [form,        setForm]        = useState<FormState>({ email: '', password: '', remember: false })
   const [errors,      setErrors]      = useState<FormErrors>({})
@@ -151,15 +155,17 @@ export default function LoginPage() {
     setLoading(true)
     setErrors({})
     try {
-      // Simulate API call
-      await new Promise(r => setTimeout(r, 1500))
-      navigate('/')
-    } catch {
-      setErrors({ general: 'Invalid email or password. Please try again.' })
+      await new Promise(r => setTimeout(r, 1000))
+      const ok = login(form.email, form.password)
+      if (ok) {
+        navigate(from, { replace: true })
+      } else {
+        setErrors({ general: 'Invalid email or password. Please try again.' })
+      }
     } finally {
       setLoading(false)
     }
-  }, [form, navigate])
+  }, [form, navigate, login, from])
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if (e.key === 'Enter' && !loading) handleSubmit()

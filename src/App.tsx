@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import RequireAuth from './components/layout/RequireAuth'
 import AppShell from './components/layout/AppShell'
 import DashboardPage from './pages/DashboardPage'
 import GenericPage from './pages/GenericPage'
@@ -57,11 +59,14 @@ import PropertyManagersPage from './pages/accounts/PropertyManagersPage'
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="login" element={<LoginPage />} />
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
 
-        <Route element={<AppShell />}>
-          <Route index element={<DashboardPage />} />
+          <Route element={<RequireAuth />}>
+            <Route element={<AppShell />}>
+              <Route path="dashboard" element={<DashboardPage />} />
 
           {/* Agent Portal — inside CRM shell */}
           <Route path="portal/listings" element={<ListingsPage />} />
@@ -131,9 +136,11 @@ export default function App() {
           <Route path="other-services" element={<OtherServicesPage />} />
 
           <Route path="*" element={<GenericPage title="Not Found" subtitle="This page does not exist" />} />
-        </Route>
+            </Route>
+          </Route>
 
-      </Routes>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
