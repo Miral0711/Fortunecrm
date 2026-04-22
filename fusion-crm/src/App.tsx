@@ -4,6 +4,18 @@ import DashboardPage from './pages/DashboardPage'
 import GenericPage from './pages/GenericPage'
 import LoginPage from './pages/LoginPage'
 
+// Agent Portal
+import PortalShell from './portal/layout/PortalShell'
+import ListingsPage from './portal/pages/ListingsPage'
+import PropertyDetailPage from './portal/pages/PropertyDetailPage'
+import SavedSearchesPage from './portal/pages/SavedSearchesPage'
+
+// Documents
+import DocumentsPage from './pages/DocumentsPage'
+
+// Distribution
+import DistributionPage from './pages/DistributionPage'
+
 // Accounts
 import ClientsPage from './pages/accounts/ClientsPage'
 
@@ -14,6 +26,10 @@ import BrochuresPage from './pages/marketing/BrochuresPage'
 // Property
 import ProjectsPage from './pages/property/ProjectsPage'
 import LotsPage from './pages/property/LotsPage'
+import PackageBuilderPage from './pages/property/PackageBuilderPage'
+
+// Construction Library
+import ConstructionLibraryPage from './pages/property/ConstructionLibraryPage'
 
 // Sales
 import SalesPage from './pages/SalesPage'
@@ -44,8 +60,20 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<LoginPage />} />
+
         <Route element={<AppShell />}>
           <Route index element={<DashboardPage />} />
+
+          {/* Agent Portal — inside CRM shell */}
+          <Route path="portal/listings" element={<ListingsPage />} />
+          <Route path="portal/listings/:id" element={<PropertyDetailPage />} />
+          <Route path="portal/saved-searches" element={<SavedSearchesPage />} />
+
+          {/* Documents */}
+          <Route path="documents" element={<DocumentsPage />} />
+
+          {/* Distribution */}
+          <Route path="distribution" element={<DistributionPage />} />
 
           {/* Accounts */}
           <Route path="accounts/clients" element={<ClientsPage />} />
@@ -66,6 +94,8 @@ export default function App() {
           {/* Property Portal */}
           <Route path="property/projects" element={<ProjectsPage />} />
           <Route path="property/lots" element={<LotsPage />} />
+          <Route path="property/package-builder" element={<PackageBuilderPage />} />
+          <Route path="property/construction-library" element={<ConstructionLibraryPage />} />
           <Route path="property/favourites" element={<GenericPage title="Favourites" subtitle="Saved favourite properties" />} />
           <Route path="property/featured" element={<GenericPage title="Featured" subtitle="Featured property listings" />} />
           <Route path="property/potential-properties" element={<GenericPage title="Potential Properties" subtitle="Prospective property pipeline" />} />
@@ -103,6 +133,7 @@ export default function App() {
 
           <Route path="*" element={<GenericPage title="Not Found" subtitle="This page does not exist" />} />
         </Route>
+
       </Routes>
     </BrowserRouter>
   )

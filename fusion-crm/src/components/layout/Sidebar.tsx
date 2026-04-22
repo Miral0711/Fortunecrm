@@ -14,7 +14,7 @@ interface Props {
 function NavItemRow({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
   const location = useLocation()
   const isChildActive = item.children?.some(c => location.pathname === c.path)
-  const [open, setOpen] = useState(isChildActive ?? false)
+  const [open, setOpen] = useState(() => item.children?.some(c => location.pathname === c.path) ?? false)
   const Icon = item.icon
 
   if (item.children) {

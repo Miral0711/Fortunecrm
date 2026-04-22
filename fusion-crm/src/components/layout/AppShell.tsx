@@ -5,6 +5,10 @@ import Topbar from './Topbar'
 import { navigation } from '../../config/navigation'
 
 function getPageTitle(pathname: string): string {
+  if (pathname.startsWith('/portal/listings/')) return 'Property Detail'
+  if (pathname === '/portal/listings') return 'Listings'
+  if (pathname === '/portal/saved-searches') return 'Saved Searches'
+  if (pathname === '/documents') return 'Documents'
   for (const group of navigation) {
     for (const item of group.items) {
       if (item.path === pathname) return item.label

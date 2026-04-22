@@ -4,7 +4,7 @@ import {
   Megaphone, Globe, FileText, Building, MapPin, Heart, Star, Home,
   TrendingUp, BarChart2, StickyNote, LogIn, Monitor, BookMarked, CheckSquare, History,
   Layers, FormInput, Search, ClipboardList, CreditCard,
-  Package, Send, Clock, Bot, Tv2, Settings2
+  Package, Send, Clock, Bot, Tv2, Settings2, Library, ExternalLink, FolderOpen, Share2,
 } from 'lucide-react'
 import type { NavGroup } from '../types'
 
@@ -12,6 +12,18 @@ export const navigation: NavGroup[] = [
   {
     items: [
       { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+    ],
+  },
+  {
+    group: 'Agent Portal',
+    items: [
+      {
+        label: 'Agent Portal', icon: ExternalLink,
+        children: [
+          { label: 'Listings', path: '/portal/listings' },
+          { label: 'Saved Searches', path: '/portal/saved-searches' },
+        ],
+      },
     ],
   },
   {
@@ -54,6 +66,8 @@ export const navigation: NavGroup[] = [
         children: [
           { label: 'Projects', path: '/property/projects' },
           { label: 'Lots', path: '/property/lots' },
+          { label: 'Package Builder', path: '/property/package-builder' },
+          { label: 'Construction Library', path: '/property/construction-library' },
           { label: 'Favourites', path: '/property/favourites' },
           { label: 'Featured', path: '/property/featured' },
           { label: 'Potential Properties', path: '/property/potential-properties' },
@@ -104,6 +118,8 @@ export const navigation: NavGroup[] = [
   {
     group: 'Tools',
     items: [
+      { label: 'Documents', path: '/documents', icon: FolderOpen },
+      { label: 'Distribution', path: '/distribution', icon: Share2 },
       { label: 'Resources', path: '/resources', icon: Package },
       { label: 'Mail List', path: '/mail-list', icon: Send },
       { label: 'Mail Status', path: '/mail-status', icon: Clock },
