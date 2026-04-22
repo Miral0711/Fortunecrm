@@ -29,7 +29,7 @@ export default function QuickSummary({
   subtitle = 'Platform-wide snapshot',
 }: Props) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
       <div className="px-4 py-3 border-b border-gray-100">
         <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
         <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>

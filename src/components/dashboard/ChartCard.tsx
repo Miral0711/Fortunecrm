@@ -8,7 +8,7 @@ interface Props {
 
 export default function ChartCard({ title, subtitle, actions, children, className = '' }: Props) {
   return (
-    <div className={`bg-white rounded-xl border border-gray-100 shadow-sm p-4 ${className}`}>
+    <div className={`bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4 ${className}`}>
       <div className="flex items-start justify-between mb-4">
         <div>
           <h3 className="text-sm font-semibold text-gray-800">{title}</h3>

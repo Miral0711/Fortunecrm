@@ -207,7 +207,7 @@ const BANNERS = [
 
 export default function OtherServicesPage() {
   return (
-    <div className="max-w-3xl mx-auto space-y-3 py-2">
+    <div className="max-w-[1400px] mx-auto space-y-4">
       {BANNERS.map(b => (
         <Banner key={b.id} b={b as ServiceBanner} />
       ))}

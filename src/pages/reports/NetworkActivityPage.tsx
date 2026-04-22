@@ -143,7 +143,7 @@ function SummaryStrip() {
       {SUMMARY_STATS.map(s => {
         const Icon = s.icon
         return (
-          <div key={s.label} className="bg-white rounded-xl border border-gray-100 shadow-sm px-4 py-3 flex items-center gap-3">
+          <div key={s.label} className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow px-4 py-3 flex items-center gap-3">
             <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${s.bg}`}>
               <Icon className={`w-4.5 h-4.5 ${s.color}`} />
             </div>
@@ -315,7 +315,7 @@ export default function NetworkActivityPage() {
   const [page, setPage] = useState(1)
 
   return (
-    <div className="space-y-0">
+    <div className="space-y-4">
       <PageHeader
         title="Network Activity"
         subtitle="Detailed activity log across all property listings and user interactions"
@@ -331,7 +331,7 @@ export default function NetworkActivityPage() {
       <SummaryStrip />
 
       {/* Main detail card */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-6 py-5">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow px-6 py-5">
         {SECTIONS.map(section => (
           <ContentSectionBlock key={section.id} section={section} />
         ))}

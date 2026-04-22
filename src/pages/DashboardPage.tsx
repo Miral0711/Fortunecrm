@@ -1,7 +1,6 @@
-import { useState } from 'react'
 import {
   Users, DollarSign, TrendingUp, FileText, Activity,
-  ArrowUpRight, Download, Plus, MoreHorizontal,
+  ArrowUpRight,
   Building2, MapPin, LayoutGrid,
 } from 'lucide-react'
 import {
@@ -12,13 +11,13 @@ import StatCard from '../components/dashboard/StatCard'
 import ChartCard from '../components/dashboard/ChartCard'
 import DataTable from '../components/ui/DataTable'
 import StatusBadge from '../components/ui/StatusBadge'
-import Tabs from '../components/ui/Tabs'
 import PageHeader from '../components/layout/PageHeader'
 import TasksCard from '../components/dashboard/TasksCard'
 import FeaturedProperties from '../components/dashboard/FeaturedProperties'
 import ProjectUpdatesTable from '../components/dashboard/ProjectUpdatesTable'
 import QuickSummary from '../components/dashboard/QuickSummary'
 import CommissionInsight from '../components/dashboard/CommissionInsight'
+import PageWrapper from '../components/layout/PageWrapper'
 import type { TableColumn, BadgeVariant } from '../types'
 
 // ── Static data ───────────────────────────────────────────────────────────────
@@ -100,12 +99,6 @@ const recentActivity: ActivityItem[] = [
   { id: '5', user: 'David C.',  action: 'Created reservation for Project Horizon',     time: '3h ago',  avatar: 'DC' },
 ]
 
-const chartTabs = [
-  { label: 'Overview',   value: 'overview' },
-  { label: 'Sales',      value: 'sales' },
-  { label: 'Enquiries',  value: 'enquiries' },
-]
-
 // ── Custom tooltip ────────────────────────────────────────────────────────────
 function CustomTooltip({ active, payload, label }: {
   active?: boolean
@@ -129,25 +122,13 @@ function CustomTooltip({ active, payload, label }: {
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default function DashboardPage() {
-  const [chartTab, setChartTab] = useState('overview')
-
   return (
-    <div className="space-y-5">
+    <PageWrapper>
 
       {/* ── Page header ── */}
       <PageHeader
         title="Dashboard"
         subtitle="Welcome back, Admin. Here's what's happening today."
-        actions={
-          <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
-              <Download className="w-3.5 h-3.5" /> Export
-            </button>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors">
-              <Plus className="w-3.5 h-3.5" /> Add Widget
-            </button>
-          </div>
-        }
       />
 
       {/* ── Row 1: Primary KPIs ── */}
@@ -172,14 +153,6 @@ export default function DashboardPage() {
           title="Revenue Overview"
           subtitle="Sales vs Enquiries — This Year"
           className="lg:col-span-2"
-          actions={
-            <div className="flex items-center gap-2">
-              <Tabs tabs={chartTabs} active={chartTab} onChange={setChartTab} />
-              <button className="p-1 rounded-md hover:bg-gray-100 text-gray-400">
-                <MoreHorizontal className="w-4 h-4" />
-              </button>
-            </div>
-          }
         >
           <div className="flex items-center gap-4 mb-3">
             <div className="flex items-center gap-1.5 text-xs text-gray-500">
@@ -350,6 +323,6 @@ export default function DashboardPage() {
         </div>
       </div>
 
-    </div>
+    </PageWrapper>
   )
 }

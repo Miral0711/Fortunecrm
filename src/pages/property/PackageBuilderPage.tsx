@@ -88,7 +88,7 @@ interface AccordionProps {
 
 function AccordionSection({ title, step, isOpen, onToggle, children, completed }: AccordionProps) {
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+    <div className="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow">
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors"
@@ -314,7 +314,7 @@ export default function PackageBuilderPage() {
 
         {/* Right Panel - Preview */}
         <div className="col-span-3">
-          <div className="sticky top-5 bg-white rounded-lg border border-gray-200 overflow-hidden">
+          <div className="sticky top-5 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
             {/* Summary Header */}
             <div className="px-5 py-4 border-b border-gray-100">
               <h3 className="text-sm font-semibold text-gray-800">Package Summary</h3>

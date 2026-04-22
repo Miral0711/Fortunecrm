@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import {
-  Plus, Download, ChevronDown, MoreVertical,
+  ChevronDown, MoreVertical,
   LayoutList, LayoutGrid, Table2, X, SlidersHorizontal,
 } from 'lucide-react'
 import { clientsFullData } from '../../data/accountsData'
@@ -8,6 +8,7 @@ import type { ClientRow } from '../../data/accountsData'
 import StatusBadge from '../../components/ui/StatusBadge'
 import PageHeader from '../../components/layout/PageHeader'
 import StatCard from '../../components/dashboard/StatCard'
+import PageWrapper from '../../components/layout/PageWrapper'
 import { Users, UserCheck, TrendingUp, Activity } from 'lucide-react'
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -138,20 +139,10 @@ export default function ClientsPage() {
   const activeCols = ALL_COLUMNS.filter(c => visibleCols.has(c.key))
 
   return (
-    <div className="space-y-4">
+    <PageWrapper>
       <PageHeader
         title="Client / Investor Search"
         breadcrumbs={[{ label: 'Accounts' }, { label: 'Clients' }]}
-        actions={
-          <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
-              <Download className="w-3.5 h-3.5" /> Export
-            </button>
-            <button className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors">
-              <Plus className="w-3.5 h-3.5" /> Add Client
-            </button>
-          </div>
-        }
       />
 
       {/* ── KPI row ── */}
@@ -163,7 +154,7 @@ export default function ClientsPage() {
       </div>
 
       {/* ── Search panel ── */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           <TextField label="First Name"       value={firstName}       onChange={v => { setFirstName(v);       setPage(1) }} />
           <TextField label="Last Name"        value={lastName}        onChange={v => { setLastName(v);        setPage(1) }} />
@@ -195,7 +186,7 @@ export default function ClientsPage() {
       </div>
 
       {/* ── Table panel ── */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
 
         {/* Toolbar */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 gap-3 flex-wrap">
@@ -419,6 +410,6 @@ export default function ClientsPage() {
           </p>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

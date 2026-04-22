@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { ChevronDown, ChevronLeft, ChevronRight, MoreVertical, Plus, ArrowUpDown } from 'lucide-react'
+import PageWrapper from '../components/layout/PageWrapper'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -160,7 +161,7 @@ export default function SalesPage() {
   const uniqueDevelopers  = [...new Set(SALES.map(s => s.developer))]
 
   return (
-    <div className="space-y-4">
+    <PageWrapper>
 
       {/* Add button top-right */}
       <div className="flex justify-end">
@@ -170,7 +171,7 @@ export default function SalesPage() {
       </div>
 
       {/* ── Filter Panel ── */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm px-5 py-4">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow px-5 py-4">
         <div className="grid grid-cols-3 gap-x-6 gap-y-4">
           {/* Row 1 */}
           <StyledSelect label="Status" value={status} onChange={setStatus}
@@ -221,7 +222,7 @@ export default function SalesPage() {
       </div>
 
       {/* ── Table Panel ── */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
 
         {/* Toolbar */}
         <div className="flex items-center justify-end gap-3 px-4 py-3 border-b border-gray-100">
@@ -364,6 +365,6 @@ export default function SalesPage() {
           </p>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   )
 }

@@ -34,7 +34,7 @@ export default function PropertyDetailPage() {
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto px-4 md:px-6 py-8">
+    <div className="max-w-[1400px] mx-auto">
       {/* Back */}
       <button
         onClick={() => navigate('/portal/listings')}

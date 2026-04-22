@@ -31,7 +31,7 @@ export default function AppShell() {
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Topbar title={title} />
-        <main className="flex-1 overflow-y-auto p-5">
+        <main className="flex-1 overflow-y-auto p-3 md:p-4">
           <Outlet />
         </main>
       </div>

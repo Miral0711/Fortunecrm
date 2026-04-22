@@ -402,7 +402,7 @@ export default function ConstructionLibraryPage() {
         />
 
         {/* Card wrapper */}
-        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
           {/* Tabs */}
           <div className="px-4 pt-1">
             <TabBar active={activeTab} onChange={t => setActiveTab(t)} />

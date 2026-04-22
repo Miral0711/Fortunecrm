@@ -44,7 +44,7 @@ function Toggle({ value, onChange }: { value: boolean; onChange: (v: boolean) =>
 
 function LogoPlaceholder({ text }: { text: string }) {
   return (
-    <div className="w-[88px] h-[72px] rounded-lg border border-gray-100 bg-gray-50 flex items-center justify-center shrink-0 overflow-hidden">
+    <div className="w-[88px] h-[72px] border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow flex items-center justify-center shrink-0">
       <div className="flex flex-col items-center gap-1 px-2">
         <Globe className="w-5 h-5 text-orange-400" />
         <span className="text-[9px] font-bold text-orange-500 text-center leading-tight">{text}</span>
@@ -73,7 +73,7 @@ function StatusPill({ status }: { status: WordpressSite['status'] }) {
 
 function WebsiteCard({ site, onToggle }: { site: WebsiteEntry; onToggle: (id: string, v: boolean) => void }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
       {/* Card header */}
       <div className="px-5 pt-4 pb-3 border-b border-gray-50">
         <h3 className="text-sm font-semibold text-orange-500">{site.name}</h3>
@@ -124,7 +124,7 @@ function WordpressCard({
   onRemove: (id: string) => void
 }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
       {/* Card header */}
       <div className="px-5 pt-4 pb-3 border-b border-gray-50 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-orange-500">{site.slot}</h3>
@@ -238,7 +238,7 @@ export default function WebsitePage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
 
       {/* ── Your Websites ── */}
       <section>

@@ -1,168 +1,107 @@
 import { useState } from 'react'
-import { Bell, BellOff, Trash2, MapPin, DollarSign, Home } from 'lucide-react'
-import clsx from 'clsx'
+import {
+  Search, Bell, Trash2, Calendar, MapPin,
+  ChevronRight, ArrowRight,
+} from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import PageWrapper from '../../components/layout/PageWrapper'
 
 interface SavedSearch {
   id: string
   name: string
-  priceRange: string
-  type: string
-  location: string
-  alertsEnabled: boolean
-  createdAt: string
-  matchCount: number
+  filters: string
+  date: string
+  results: number
+  newResults: number
 }
 
-const initialSearches: SavedSearch[] = [
-  {
-    id: '1',
-    name: 'Family homes in Clyde North',
-    priceRange: '$600k – $800k',
-    type: 'House & Land',
-    location: 'Clyde North, VIC',
-    alertsEnabled: true,
-    createdAt: '12 Apr 2026',
-    matchCount: 8,
-  },
-  {
-    id: '2',
-    name: 'Affordable apartments',
-    priceRange: 'Under $500k',
-    type: 'Apartment',
-    location: 'All Locations',
-    alertsEnabled: false,
-    createdAt: '8 Apr 2026',
-    matchCount: 12,
-  },
-  {
-    id: '3',
-    name: 'Land in Wollert',
-    priceRange: '$300k – $400k',
-    type: 'Land',
-    location: 'Wollert, VIC',
-    alertsEnabled: true,
-    createdAt: '3 Apr 2026',
-    matchCount: 3,
-  },
+const SAVED_SEARCHES: SavedSearch[] = [
+  { id: '1', name: 'Houses in Tarneit', filters: 'Project: Harlow · Type: House · Beds: 4+', date: '14 Apr 2026', results: 24, newResults: 3 },
+  { id: '2', name: 'Duplex SMSF Diggers Rest', filters: 'Type: Duplex · SMSF: Yes · Suburb: Diggers Rest', date: '08 Mar 2026', results: 5, newResults: 0 },
+  { id: '3', name: 'Clyde North Land', filters: 'Type: Land · Price: < 400k', date: '22 Feb 2026', results: 12, newResults: 1 },
 ]
 
 export default function SavedSearchesPage() {
-  const [searches, setSearches] = useState(initialSearches)
-
-  const toggleAlert = (id: string) => {
-    setSearches(prev => prev.map(s => s.id === id ? { ...s, alertsEnabled: !s.alertsEnabled } : s))
-  }
+  const navigate = useNavigate()
+  const [searches, setSearches] = useState(SAVED_SEARCHES)
 
   const deleteSearch = (id: string) => {
-    setSearches(prev => prev.filter(s => s.id !== id))
+    setSearches(searches.filter(s => s.id !== id))
   }
 
   return (
-    <div className="max-w-screen-lg mx-auto px-4 md:px-6 py-8">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-xl font-semibold text-gray-800">Saved Searches</h1>
-        <p className="text-sm text-gray-500 mt-0.5">
-          Manage your saved property searches and email alerts
-        </p>
-      </div>
+    <PageWrapper>
+      {/* Header removed */}
 
-      {/* List */}
-      {searches.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center mb-3">
-            <MapPin className="w-5 h-5 text-gray-400" />
-          </div>
-          <p className="text-sm font-medium text-gray-600">No saved searches yet</p>
-          <p className="text-xs text-gray-400 mt-1">Create a search from the listings page</p>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {searches.map(search => (
-            <div
-              key={search.id}
-              className="bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-md hover:border-orange-100 transition-all"
-            >
-              <div className="flex items-start justify-between gap-4">
-                {/* Left: details */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-semibold text-gray-800 mb-2">{search.name}</h3>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-gray-500">
-                    <span className="flex items-center gap-1.5">
-                      <DollarSign className="w-3.5 h-3.5 text-gray-400" />
-                      {search.priceRange}
+      <div className="grid grid-cols-1 gap-4">
+        {searches.map((search) => (
+          <div
+            key={search.id}
+            className="group bg-white rounded-2xl border border-gray-100 p-5 hover:shadow-lg hover:border-orange-100 transition-all"
+          >
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-semibold text-gray-800 text-base group-hover:text-orange-600 transition-colors">{search.name}</h3>
+                  {search.newResults > 0 && (
+                    <span className="bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                      {search.newResults} NEW
                     </span>
-                    <span className="flex items-center gap-1.5">
-                      <Home className="w-3.5 h-3.5 text-gray-400" />
-                      {search.type}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-gray-400" />
-                      {search.location}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 mt-3 text-xs">
-                    <span className="text-gray-400">Created {search.createdAt}</span>
-                    <span className="w-1 h-1 rounded-full bg-gray-200" />
-                    <span className="font-medium text-orange-600">{search.matchCount} matches</span>
-                  </div>
+                  )}
                 </div>
-
-                {/* Right: actions */}
-                <div className="flex items-center gap-2 shrink-0">
-                  {/* Alert toggle */}
-                  <button
-                    onClick={() => toggleAlert(search.id)}
-                    className={clsx(
-                      'flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border transition-colors',
-                      search.alertsEnabled
-                        ? 'bg-orange-50 border-orange-200 text-orange-600'
-                        : 'bg-white border-gray-200 text-gray-500 hover:bg-gray-50'
-                    )}
-                    title={search.alertsEnabled ? 'Alerts enabled' : 'Alerts disabled'}
-                  >
-                    {search.alertsEnabled ? (
-                      <>
-                        <Bell className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">Alerts On</span>
-                      </>
-                    ) : (
-                      <>
-                        <BellOff className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">Alerts Off</span>
-                      </>
-                    )}
-                  </button>
-
-                  {/* Delete */}
-                  <button
-                    onClick={() => deleteSearch(search.id)}
-                    className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition-colors"
-                    title="Delete search"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                <div className="flex items-center gap-4 text-xs text-gray-400">
+                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> Saved on {search.date}</span>
+                  <span className="flex items-center gap-1"><Search className="w-3.5 h-3.5" /> {search.results} total results</span>
+                </div>
+                <div className="mt-3 p-3 bg-gray-50 rounded-xl border border-gray-100/50">
+                  <p className="text-xs text-gray-600">
+                    <span className="font-medium text-gray-400 uppercase text-[9px] tracking-wider block mb-1">Search Criteria</span>
+                    {search.filters}
+                  </p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
 
-      {/* Info box */}
-      {searches.length > 0 && (
-        <div className="mt-8 bg-orange-50 border border-orange-100 rounded-2xl p-5">
-          <div className="flex items-start gap-3">
-            <Bell className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-medium text-orange-800">Email Alerts</p>
-              <p className="text-xs text-orange-600 mt-1 leading-relaxed">
-                When alerts are enabled, you'll receive an email notification whenever a new property matches your saved search criteria.
-              </p>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-600 transition-all border border-transparent hover:border-gray-100"
+                  title="Notifications"
+                >
+                  <Bell className="w-4.5 h-4.5" />
+                </button>
+                <button
+                  onClick={() => deleteSearch(search.id)}
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all border border-transparent hover:border-red-100"
+                  title="Delete"
+                >
+                  <Trash2 className="w-4.5 h-4.5" />
+                </button>
+                <button
+                  onClick={() => navigate('/portal/listings')}
+                  className="flex items-center gap-2 pl-4 pr-3 py-2.5 bg-orange-500 text-white text-sm font-medium rounded-xl hover:bg-orange-600 transition-all shadow-sm"
+                >
+                  View Results <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        ))}
+
+        {searches.length === 0 && (
+          <div className="py-20 text-center bg-white rounded-2xl border border-dashed border-gray-200">
+            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Search className="w-8 h-8 text-gray-300" />
+            </div>
+            <h3 className="font-semibold text-gray-800">No saved searches</h3>
+            <p className="text-gray-500 text-sm mt-1 max-w-xs mx-auto">You haven't saved any property searches yet. Use the filters on the listings page to find what you're looking for!</p>
+            <button
+              onClick={() => navigate('/portal/listings')}
+              className="mt-6 px-6 py-2.5 bg-orange-500 text-white text-sm font-medium rounded-xl hover:bg-orange-600 transition-all"
+            >
+              Go to Listings
+            </button>
+          </div>
+        )}
+      </div>
+    </PageWrapper>
   )
 }

@@ -10,7 +10,7 @@ import type { NavGroup } from '../types'
 export const navigation: NavGroup[] = [
   {
     items: [
-      { label: 'Dashboard', path: '/', icon: LayoutDashboard },
+      { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     ],
   },
   {

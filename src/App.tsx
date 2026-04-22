@@ -44,6 +44,10 @@ import NetworkActivityPage from './pages/reports/NetworkActivityPage'
 // Website
 import WordPressPage from './pages/website/WordPressPage'
 
+// Online Forms
+import PropertyEnquiryPage from './pages/forms/PropertyEnquiryPage'
+import PropertyEnquiryCreatePage from './pages/forms/PropertyEnquiryCreatePage'
+
 // Other
 import OtherServicesPage from './pages/OtherServicesPage'
 import BotInABoxPage from './pages/BotInABoxPage'
@@ -62,7 +66,7 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
           <Route element={<RequireAuth />}>
             <Route element={<AppShell />}>
@@ -122,7 +126,8 @@ export default function App() {
           <Route path="website/api-keys" element={<GenericPage title="Approved API Keys" subtitle="Manage approved API keys" />} />
 
           {/* Online Forms */}
-          <Route path="forms/property-enquiry" element={<GenericPage title="Property Enquiry" subtitle="Incoming property enquiry forms" />} />
+          <Route path="forms/property-enquiry" element={<PropertyEnquiryPage />} />
+          <Route path="forms/property-enquiry/create" element={<PropertyEnquiryCreatePage />} />
           <Route path="forms/property-search" element={<GenericPage title="Property Search Request" subtitle="Search request submissions" />} />
           <Route path="forms/property-reservation" element={<GenericPage title="Property Reservation" subtitle="Online reservation forms" />} />
           <Route path="forms/finance-assessment" element={<GenericPage title="Finance Assessment" subtitle="Finance assessment submissions" />} />
