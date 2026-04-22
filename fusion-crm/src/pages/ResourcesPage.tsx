@@ -2,12 +2,13 @@ import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { Sparkles, Search as SearchIcon } from 'lucide-react'
 import PageHeader from '../components/layout/PageHeader'
 import CategorySidebar from '../components/resources/CategorySidebar'
+import { CATEGORIES, RESOURCES as ALL_RESOURCES } from '../data/resourcesData'
 import ResourceCard from '../components/resources/ResourceCard'
 import ResourceSearchBar from '../components/resources/ResourceSearchBar'
 import FilterDropdowns from '../components/resources/FilterDropdowns'
 import ResourceCardSkeleton from '../components/resources/ResourceCardSkeleton'
 import VideoModal from '../components/resources/VideoModal'
-import { RESOURCES, getRecommended } from '../data/resourcesData'
+import { getRecommended } from '../data/resourcesData'
 import type { Resource, ResourceType, UserRole } from '../data/resourcesData'
 import type { DurationFilter, SortOption } from '../components/resources/FilterDropdowns'
 
@@ -55,7 +56,7 @@ export default function ResourcesPage() {
   const recommended = useMemo(() => getRecommended(MOCK_USER_ROLE, MOCK_RECENT_IDS), [])
 
   const filtered = useMemo(() => {
-    let list = RESOURCES
+    let list = ALL_RESOURCES
     if (activeCategory !== 'all')  list = list.filter(r => r.category === activeCategory)
     if (activeSubcategory)         list = list.filter(r => r.subcategory === activeSubcategory)
     if (typeFilter !== 'all')      list = list.filter(r => r.type === typeFilter)
@@ -111,10 +112,13 @@ export default function ResourcesPage() {
         {/* Main layout */}
         <div className="flex gap-5 items-start">
           <CategorySidebar
+            categories={CATEGORIES}
             activeCategory={activeCategory}
             activeSubcategory={activeSubcategory}
             onCategoryChange={setActiveCategory}
             onSubcategoryChange={setActiveSubcategory}
+            countFor={catId => catId === 'all' ? ALL_RESOURCES.length : ALL_RESOURCES.filter(r => r.category === catId).length}
+            countForSub={subId => ALL_RESOURCES.filter(r => r.subcategory === subId).length}
           />
 
           <div className="flex-1 min-w-0 space-y-6">

@@ -12,6 +12,7 @@ import clsx from 'clsx'
 import PageHeader from '../../components/layout/PageHeader'
 import Drawer from '../../components/ui/Drawer'
 import StatusBadge from '../../components/ui/StatusBadge'
+import { useSelection } from '../../hooks/useSelection'
 import {
   LIBRARY_ITEMS, TAB_LABELS, CATEGORY_OPTIONS,
   type LibraryItem, type LibraryTab, type LibraryCategory, type LibraryIconName,
@@ -333,15 +334,15 @@ export default function ConstructionLibraryPage() {
   const [status, setStatus]             = useState('all')
   const [sort, setSort]                 = useState('name-asc')
   const [viewMode, setViewMode]         = useState<'grid' | 'list'>('grid')
-  const [selected, setSelected]         = useState<Set<string>>(new Set())
+  const { selected, toggle: toggleSelect, clear: clearSelected, selectAll, count: selectedCount, hasAny: someSelected } = useSelection<string>()
   const [drawerItem, setDrawerItem]     = useState<LibraryItem | null>(null)
 
   // Reset filters on tab change
   useEffect(() => {
     setCategory('all')
     setSearch('')
-    setSelected(new Set())
-  }, [activeTab])
+    clearSelected()
+  }, [activeTab, clearSelected])
 
   const categoryOptions = [
     { value: 'all', label: 'All Categories' },
@@ -375,24 +376,15 @@ export default function ConstructionLibraryPage() {
     return list
   }, [activeTab, category, status, search, sort])
 
-  function toggleSelect(id: string) {
-    setSelected(prev => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
-  }
-
   function toggleAll() {
     if (selected.size === filtered.length) {
-      setSelected(new Set())
+      clearSelected()
     } else {
-      setSelected(new Set(filtered.map(i => i.id)))
+      selectAll(filtered.map(i => i.id))
     }
   }
 
   const allSelected = filtered.length > 0 && selected.size === filtered.length
-  const someSelected = selected.size > 0
 
   return (
     <>
@@ -502,7 +494,7 @@ export default function ConstructionLibraryPage() {
                 <Trash2 className="w-3.5 h-3.5" />
                 Delete
               </button>
-              <button onClick={() => setSelected(new Set())} className="text-gray-400 hover:text-gray-600">
+              <button onClick={clearSelected} className="text-gray-400 hover:text-gray-600">
                 <X className="w-3.5 h-3.5" />
               </button>
             </div>
@@ -576,7 +568,7 @@ export default function ConstructionLibraryPage() {
           <div className="px-4 py-2.5 border-t border-gray-50 flex items-center justify-between">
             <span className="text-xs text-gray-400">{filtered.length} item{filtered.length !== 1 ? 's' : ''}</span>
             {someSelected && (
-              <span className="text-xs text-orange-600 font-medium">{selected.size} selected</span>
+              <span className="text-xs text-orange-600 font-medium">{selectedCount} selected</span>
             )}
           </div>
         </div>

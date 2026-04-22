@@ -1,25 +1,36 @@
 import clsx from 'clsx'
-import { CATEGORIES, RESOURCES } from '../../data/resourcesData'
+
+export interface SubCategory {
+  id: string
+  label: string
+}
+
+export interface Category {
+  id: string
+  label: string
+  icon: string
+  subcategories: SubCategory[]
+}
 
 interface Props {
+  categories: Category[]
   activeCategory: string
   activeSubcategory: string
   onCategoryChange: (cat: string) => void
   onSubcategoryChange: (sub: string) => void
+  countFor?: (catId: string) => number
+  countForSub?: (subId: string) => number
 }
 
 export default function CategorySidebar({
+  categories,
   activeCategory,
   activeSubcategory,
   onCategoryChange,
   onSubcategoryChange,
+  countFor,
+  countForSub,
 }: Props) {
-  const countFor = (catId: string) =>
-    catId === 'all' ? RESOURCES.length : RESOURCES.filter(r => r.category === catId).length
-
-  const countForSub = (subId: string) =>
-    RESOURCES.filter(r => r.subcategory === subId).length
-
   return (
     <aside className="w-48 flex-shrink-0">
       <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-2 mb-2">
@@ -27,7 +38,7 @@ export default function CategorySidebar({
       </p>
 
       <nav className="flex flex-col gap-0.5">
-        {CATEGORIES.map(cat => {
+        {categories.map(cat => {
           const isActive = activeCategory === cat.id
           return (
             <div key={cat.id}>
@@ -44,15 +55,16 @@ export default function CategorySidebar({
                   <span className="text-sm leading-none flex-shrink-0">{cat.icon}</span>
                   <span className="truncate">{cat.label}</span>
                 </span>
-                <span className={clsx(
-                  'text-[10px] tabular-nums flex-shrink-0 ml-1',
-                  isActive ? 'text-orange-400' : 'text-gray-300 group-hover:text-gray-400'
-                )}>
-                  {countFor(cat.id)}
-                </span>
+                {countFor && (
+                  <span className={clsx(
+                    'text-[10px] tabular-nums flex-shrink-0 ml-1',
+                    isActive ? 'text-orange-400' : 'text-gray-300 group-hover:text-gray-400'
+                  )}>
+                    {countFor(cat.id)}
+                  </span>
+                )}
               </button>
 
-              {/* Subcategories — only when active */}
               {isActive && cat.subcategories.length > 0 && (
                 <div className="ml-6 mt-0.5 mb-1 flex flex-col gap-0.5 border-l border-gray-100 pl-2.5">
                   {cat.subcategories.map(sub => (
@@ -67,7 +79,9 @@ export default function CategorySidebar({
                       )}
                     >
                       <span>{sub.label}</span>
-                      <span className="text-gray-300 text-[10px]">{countForSub(sub.id)}</span>
+                      {countForSub && (
+                        <span className="text-gray-300 text-[10px]">{countForSub(sub.id)}</span>
+                      )}
                     </button>
                   ))}
                 </div>

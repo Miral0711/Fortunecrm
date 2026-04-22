@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, Search, Save, Send } from 'lucide-react'
 import PageHeader from '../../components/layout/PageHeader'
+import PriceBreakdown from '../../components/domain/PriceBreakdown'
+import { usePackageBuilder } from '../../hooks/usePackageBuilder'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -117,17 +119,13 @@ export default function PackageBuilderPage() {
   const [activeTab, setActiveTab] = useState<'floorplan' | 'media' | 'documents'>('floorplan')
   const [openSection, setOpenSection] = useState<number>(1)
   const [lotSearch, setLotSearch] = useState('')
-  
-  const [packageData, setPackageData] = useState<PackageData>({
-    lot: null,
-    design: null,
-    facade: null,
-    inclusions: [],
-    adjustments: [
-      { label: 'Site Costs', value: 0 },
-      { label: 'Discount', value: 0 },
-    ],
-  })
+
+  const { state: packageData, setLot, setDesign, setFacade, toggleInclusion, updateAdjustment, calculateTotal, isIncluded } = usePackageBuilder<
+    typeof LOTS[0], typeof DESIGNS[0], typeof FACADES[0], typeof INCLUSIONS[0]
+  >([
+    { label: 'Site Costs', value: 0 },
+    { label: 'Discount', value: 0 },
+  ])
 
   const filteredLots = LOTS.filter(lot =>
     lot.name.toLowerCase().includes(lotSearch.toLowerCase()) ||
@@ -139,33 +137,6 @@ export default function PackageBuilderPage() {
     acc[inc.category].push(inc)
     return acc
   }, {} as Record<string, Inclusion[]>)
-
-  const toggleInclusion = (inclusion: Inclusion) => {
-    setPackageData(prev => ({
-      ...prev,
-      inclusions: prev.inclusions.some(i => i.id === inclusion.id)
-        ? prev.inclusions.filter(i => i.id !== inclusion.id)
-        : [...prev.inclusions, inclusion],
-    }))
-  }
-
-  const updateAdjustment = (label: string, value: number) => {
-    setPackageData(prev => ({
-      ...prev,
-      adjustments: prev.adjustments.map(adj =>
-        adj.label === label ? { ...adj, value } : adj
-      ),
-    }))
-  }
-
-  const calculateTotal = () => {
-    const lotPrice = packageData.lot?.price || 0
-    const designPrice = packageData.design?.price || 0
-    const facadePrice = packageData.facade?.price || 0
-    const inclusionsPrice = packageData.inclusions.reduce((sum, inc) => sum + inc.price, 0)
-    const adjustmentsTotal = packageData.adjustments.reduce((sum, adj) => sum + adj.value, 0)
-    return lotPrice + designPrice + facadePrice + inclusionsPrice + adjustmentsTotal
-  }
 
   return (
     <div>
@@ -209,7 +180,7 @@ export default function PackageBuilderPage() {
                 <button
                   key={lot.id}
                   onClick={() => {
-                    setPackageData(prev => ({ ...prev, lot }))
+                    setLot(lot)
                     setOpenSection(2)
                   }}
                   className={`w-full text-left px-3 py-2 rounded-md border transition-colors ${
@@ -238,7 +209,7 @@ export default function PackageBuilderPage() {
                 <button
                   key={design.id}
                   onClick={() => {
-                    setPackageData(prev => ({ ...prev, design }))
+                    setDesign(design)
                     setOpenSection(3)
                   }}
                   className={`text-left rounded-lg border overflow-hidden transition-colors ${
@@ -271,7 +242,7 @@ export default function PackageBuilderPage() {
                 <button
                   key={facade.id}
                   onClick={() => {
-                    setPackageData(prev => ({ ...prev, facade }))
+                    setFacade(facade)
                     setOpenSection(4)
                   }}
                   className={`shrink-0 w-28 rounded-lg border overflow-hidden transition-colors ${
@@ -310,7 +281,7 @@ export default function PackageBuilderPage() {
                       >
                         <input
                           type="checkbox"
-                          checked={packageData.inclusions.some(i => i.id === inc.id)}
+                        checked={isIncluded(inc.id)}
                           onChange={() => toggleInclusion(inc)}
                           className="w-3.5 h-3.5 rounded border-gray-300 text-orange-500 focus:ring-orange-400/30"
                         />

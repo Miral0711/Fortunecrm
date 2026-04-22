@@ -8,16 +8,10 @@ import {
 import clsx from 'clsx'
 import { documents, folders, tagColors } from '../data/documentsData'
 import type { DocFile, DocFolder, DocTag } from '../data/documentsData'
+import DocumentCard, { FileIcon } from '../components/domain/DocumentCard'
+import { useSelection } from '../hooks/useSelection'
 
 // ── helpers ──────────────────────────────────────────────────────────────────
-
-function FileIcon({ type, className }: { type: DocFile['type']; className?: string }) {
-  const cls = clsx('shrink-0', className)
-  if (type === 'pdf')   return <FileText className={clsx(cls, 'text-red-400')} />
-  if (type === 'image') return <FileImage className={clsx(cls, 'text-blue-400')} />
-  if (type === 'xlsx')  return <FileSpreadsheet className={clsx(cls, 'text-green-500')} />
-  return <File className={clsx(cls, 'text-gray-400')} />
-}
 
 const ALL_TAGS: DocTag[] = ['Contract', 'Brochure', 'Floor Plan', 'Legal', 'Finance', 'Marketing', 'Report']
 
@@ -158,7 +152,7 @@ export default function DocumentsPage() {
   const [search, setSearch] = useState('')
   const [tagFilter, setTagFilter] = useState<DocTag | 'All'>('All')
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const { selected: selectedIds, toggle: toggleSelect, selectAll, clear: clearSelection, hasAny } = useSelection<string>()
   const [previewFile, setPreviewFile] = useState<DocFile | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [uploadedNames, setUploadedNames] = useState<string[]>([])
@@ -178,15 +172,7 @@ export default function DocumentsPage() {
   })
 
   // Selection
-  const toggleSelect = (id: string) => {
-    setSelectedIds(prev => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
-  }
-  const selectAll = () => setSelectedIds(new Set(filtered.map(f => f.id)))
-  const clearSelection = () => setSelectedIds(new Set())
+  const handleSelectAll = () => selectAll(filtered.map(f => f.id))
 
   // Drag & drop
   const onDragOver = useCallback((e: React.DragEvent) => {
@@ -272,7 +258,7 @@ export default function DocumentsPage() {
         </div>
 
         {/* Bulk action bar */}
-        {selectedIds.size > 0 && (
+        {hasAny && (
           <div className="flex items-center gap-3 px-5 py-2.5 bg-orange-50 border-b border-orange-100 shrink-0">
             <span className="text-sm font-medium text-orange-700">{selectedIds.size} selected</span>
             <button
@@ -294,9 +280,9 @@ export default function DocumentsPage() {
         )}
 
         {/* Select all row */}
-        {filtered.length > 0 && selectedIds.size === 0 && (
+        {filtered.length > 0 && !hasAny && (
           <div className="flex items-center gap-2 px-5 py-2 border-b border-gray-50 bg-white shrink-0">
-            <button onClick={selectAll} className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors">
+            <button onClick={handleSelectAll} className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors">
               <Square className="w-3.5 h-3.5" /> Select all
             </button>
             <span className="text-xs text-gray-400 ml-auto">{filtered.length} file{filtered.length !== 1 ? 's' : ''}</span>
@@ -339,24 +325,26 @@ export default function DocumentsPage() {
           ) : viewMode === 'grid' ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
               {filtered.map(doc => (
-                <GridCard
+                <DocumentCard
                   key={doc.id}
-                  doc={doc}
+                  doc={{ ...doc, tagColor: tagColors[doc.tag] }}
                   selected={selectedIds.has(doc.id)}
                   onSelect={() => toggleSelect(doc.id)}
                   onPreview={() => setPreviewFile(doc)}
+                  variant="grid"
                 />
               ))}
             </div>
           ) : (
             <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
               {filtered.map((doc, i) => (
-                <ListRow
+                <DocumentCard
                   key={doc.id}
-                  doc={doc}
+                  doc={{ ...doc, tagColor: tagColors[doc.tag] }}
                   selected={selectedIds.has(doc.id)}
                   onSelect={() => toggleSelect(doc.id)}
                   onPreview={() => setPreviewFile(doc)}
+                  variant="list"
                   isLast={i === filtered.length - 1}
                 />
               ))}
@@ -369,134 +357,6 @@ export default function DocumentsPage() {
       {previewFile && (
         <PreviewModal file={previewFile} onClose={() => setPreviewFile(null)} />
       )}
-    </div>
-  )
-}
-
-// ── Grid card ─────────────────────────────────────────────────────────────────
-
-function GridCard({ doc, selected, onSelect, onPreview }: {
-  doc: DocFile; selected: boolean
-  onSelect: () => void; onPreview: () => void
-}) {
-  return (
-    <div
-      className={clsx(
-        'group relative bg-white rounded-xl border transition-all cursor-pointer',
-        selected ? 'border-orange-300 ring-2 ring-orange-200' : 'border-gray-100 hover:border-orange-100 hover:shadow-sm'
-      )}
-    >
-      {/* Checkbox */}
-      <button
-        onClick={e => { e.stopPropagation(); onSelect() }}
-        className={clsx(
-          'absolute top-2 left-2 z-10 transition-opacity',
-          selected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-        )}
-      >
-        {selected
-          ? <CheckSquare className="w-4 h-4 text-orange-500" />
-          : <Square className="w-4 h-4 text-gray-400" />
-        }
-      </button>
-
-      {/* Preview button */}
-      <button
-        onClick={e => { e.stopPropagation(); onPreview() }}
-        className="absolute top-2 right-2 z-10 p-1 rounded-md bg-white/80 text-gray-400 hover:text-orange-500 opacity-0 group-hover:opacity-100 transition-opacity"
-      >
-        <Eye className="w-3.5 h-3.5" />
-      </button>
-
-      {/* Thumbnail */}
-      <div
-        className="h-28 rounded-t-xl overflow-hidden bg-gray-50 flex items-center justify-center"
-        onClick={onPreview}
-      >
-        {doc.thumbnailUrl ? (
-          <img src={doc.thumbnailUrl} alt={doc.name} className="w-full h-full object-cover" />
-        ) : (
-          <FileIcon type={doc.type} className="w-10 h-10 opacity-30" />
-        )}
-      </div>
-
-      {/* Info */}
-      <div className="p-3" onClick={onPreview}>
-        <p className="text-xs font-medium text-gray-700 truncate leading-snug mb-1">{doc.name}</p>
-        <p className="text-[10px] text-gray-400 mb-2">{doc.usageInfo}</p>
-        {doc.inherited && (
-          <p className="text-[10px] text-gray-400 italic mb-1.5">Inherited from Project</p>
-        )}
-        <span className={clsx('inline-block text-[10px] font-medium px-2 py-0.5 rounded-full', tagColors[doc.tag])}>
-          {doc.tag}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-// ── List row ──────────────────────────────────────────────────────────────────
-
-function ListRow({ doc, selected, onSelect, onPreview, isLast }: {
-  doc: DocFile; selected: boolean
-  onSelect: () => void; onPreview: () => void; isLast: boolean
-}) {
-  return (
-    <div
-      className={clsx(
-        'flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition-colors cursor-pointer group',
-        !isLast && 'border-b border-gray-50',
-        selected && 'bg-orange-50/50'
-      )}
-      onClick={onPreview}
-    >
-      {/* Checkbox */}
-      <button onClick={e => { e.stopPropagation(); onSelect() }} className="shrink-0">
-        {selected
-          ? <CheckSquare className="w-4 h-4 text-orange-500" />
-          : <Square className="w-4 h-4 text-gray-300 group-hover:text-gray-400" />
-        }
-      </button>
-
-      {/* Icon / thumb */}
-      <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center shrink-0 overflow-hidden">
-        {doc.thumbnailUrl
-          ? <img src={doc.thumbnailUrl} alt="" className="w-full h-full object-cover" />
-          : <FileIcon type={doc.type} className="w-4 h-4" />
-        }
-      </div>
-
-      {/* Name + meta */}
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-700 truncate">{doc.name}</p>
-        <div className="flex items-center gap-2 mt-0.5">
-          <p className="text-xs text-gray-400">{doc.usageInfo}</p>
-          {doc.inherited && (
-            <span className="text-xs text-gray-400 italic">· Inherited from Project</span>
-          )}
-        </div>
-      </div>
-
-      {/* Tag */}
-      <span className={clsx('text-xs font-medium px-2 py-0.5 rounded-full shrink-0', tagColors[doc.tag])}>
-        {doc.tag}
-      </span>
-
-      {/* Size + date */}
-      <span className="text-xs text-gray-400 w-16 text-right shrink-0 hidden sm:block">{doc.size}</span>
-      <span className="text-xs text-gray-400 w-24 text-right shrink-0 hidden md:block">{doc.uploadedAt}</span>
-
-      {/* Actions */}
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-        <button
-          onClick={e => { e.stopPropagation(); onPreview() }}
-          className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400 hover:text-orange-500"
-        ><Eye className="w-3.5 h-3.5" /></button>
-        <button
-          onClick={e => e.stopPropagation()}
-          className="p-1.5 rounded-lg hover:bg-gray-100 text-gray-400"
-        ><Download className="w-3.5 h-3.5" /></button>
-      </div>
     </div>
   )
 }

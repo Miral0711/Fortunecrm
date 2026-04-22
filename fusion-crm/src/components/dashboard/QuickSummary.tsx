@@ -1,27 +1,38 @@
 import { Users, UserCheck, Activity, Mail } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
-interface SummaryItem {
+export interface SummaryItem {
   label: string
   value: string
-  icon: typeof Users
+  icon: LucideIcon
   iconBg: string
   iconColor: string
   sub?: string
 }
 
-const items: SummaryItem[] = [
+const DEFAULT_ITEMS: SummaryItem[] = [
   { label: 'Total Clients',      value: '2,841', icon: UserCheck, iconBg: 'bg-blue-50',   iconColor: 'text-blue-500',   sub: '+184 this month' },
   { label: 'Total Subscribers',  value: '8,204', icon: Mail,      iconBg: 'bg-indigo-50', iconColor: 'text-indigo-500', sub: '+312 this week' },
   { label: 'Active Users Today', value: '1,047', icon: Activity,  iconBg: 'bg-green-50',  iconColor: 'text-green-500',  sub: 'Online now' },
   { label: 'Total Accounts',     value: '14,382',icon: Users,     iconBg: 'bg-orange-50', iconColor: 'text-orange-500', sub: 'All roles combined' },
 ]
 
-export default function QuickSummary() {
+interface Props {
+  items?: SummaryItem[]
+  title?: string
+  subtitle?: string
+}
+
+export default function QuickSummary({
+  items = DEFAULT_ITEMS,
+  title = 'Quick Summary',
+  subtitle = 'Platform-wide snapshot',
+}: Props) {
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
       <div className="px-4 py-3 border-b border-gray-100">
-        <h3 className="text-sm font-semibold text-gray-800">Quick Summary</h3>
-        <p className="text-xs text-gray-400 mt-0.5">Platform-wide snapshot</p>
+        <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
+        <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>
       </div>
       <div className="divide-y divide-gray-50">
         {items.map(item => {

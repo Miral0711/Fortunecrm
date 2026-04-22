@@ -1,15 +1,10 @@
 import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SlidersHorizontal, Bed, Bath, Car, MapPin, Heart, X } from 'lucide-react'
+import { SlidersHorizontal, MapPin, X } from 'lucide-react'
 import clsx from 'clsx'
 import { listings, priceRanges, propertyTypes, locations } from '../data/listingsData'
-import type { Listing } from '../data/listingsData'
-
-const statusColors: Record<Listing['status'], string> = {
-  Available: 'bg-green-50 text-green-700',
-  'Under Offer': 'bg-orange-50 text-orange-600',
-  Sold: 'bg-gray-100 text-gray-500',
-}
+import PropertyCard from '../../components/domain/PropertyCard'
+import type { PropertyCardData } from '../../components/domain/PropertyCard'
 
 export default function ListingsPage() {
   const navigate = useNavigate()
@@ -174,8 +169,22 @@ export default function ListingsPage() {
               {filtered.map(listing => (
                 <PropertyCard
                   key={listing.id}
-                  listing={listing}
-                  saved={savedIds.has(listing.id)}
+                  property={{
+                    id: listing.id,
+                    title: listing.title,
+                    project: listing.project,
+                    location: listing.location,
+                    price: listing.priceLabel,
+                    status: listing.status,
+                    type: listing.type,
+                    bedrooms: listing.bedrooms,
+                    bathrooms: listing.bathrooms,
+                    garage: listing.garage,
+                    landSize: listing.landSize,
+                    image: listing.image,
+                    featured: listing.featured,
+                    saved: savedIds.has(listing.id),
+                  } as PropertyCardData}
                   onSave={toggleSave}
                   onClick={() => navigate(`/portal/listings/${listing.id}`)}
                 />
@@ -183,77 +192,6 @@ export default function ListingsPage() {
             </div>
           )}
         </div>
-      </div>
-    </div>
-  )
-}
-
-function PropertyCard({
-  listing, saved, onSave, onClick,
-}: {
-  listing: Listing
-  saved: boolean
-  onSave: (id: string, e: React.MouseEvent) => void
-  onClick: () => void
-}) {
-  return (
-    <div
-      onClick={onClick}
-      className="bg-white rounded-2xl border border-gray-100 overflow-hidden cursor-pointer group hover:shadow-md hover:border-orange-100 transition-all duration-200"
-    >
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden bg-gray-100">
-        <img
-          src={listing.image}
-          alt={listing.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-        />
-        {/* Status badge */}
-        <span className={clsx('absolute top-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full', statusColors[listing.status])}>
-          {listing.status}
-        </span>
-        {/* Save button */}
-        <button
-          onClick={e => onSave(listing.id, e)}
-          className={clsx(
-            'absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-colors',
-            saved ? 'bg-orange-500 text-white' : 'bg-white/90 text-gray-500 hover:text-orange-500'
-          )}
-        >
-          <Heart className={clsx('w-4 h-4', saved && 'fill-current')} />
-        </button>
-        {listing.featured && (
-          <span className="absolute bottom-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full bg-orange-500 text-white">
-            Featured
-          </span>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="p-4">
-        <p className="text-xs text-gray-400 mb-1">{listing.project}</p>
-        <h3 className="text-sm font-semibold text-gray-800 leading-snug mb-1">{listing.title}</h3>
-        <div className="flex items-center gap-1 text-xs text-gray-500 mb-3">
-          <MapPin className="w-3 h-3 shrink-0" />
-          {listing.location}
-        </div>
-
-        <p className="text-lg font-bold text-gray-800 mb-3">{listing.priceLabel}</p>
-
-        {/* Specs */}
-        {listing.type !== 'Land' ? (
-          <div className="flex items-center gap-4 text-xs text-gray-500 border-t border-gray-50 pt-3">
-            <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" />{listing.bedrooms}</span>
-            <span className="flex items-center gap-1"><Bath className="w-3.5 h-3.5" />{listing.bathrooms}</span>
-            <span className="flex items-center gap-1"><Car className="w-3.5 h-3.5" />{listing.garage}</span>
-            <span className="ml-auto text-gray-400">{listing.landSize}</span>
-          </div>
-        ) : (
-          <div className="flex items-center gap-1 text-xs text-gray-500 border-t border-gray-50 pt-3">
-            <span className="font-medium text-gray-700">{listing.landSize}</span>
-            <span className="text-gray-400">land area</span>
-          </div>
-        )}
       </div>
     </div>
   )
