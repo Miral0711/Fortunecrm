@@ -1,9 +1,8 @@
 import { useState, useRef, useCallback } from 'react'
 import {
   Upload, Search, Trash2, Download, Grid3X3, List,
-  FileText, FileImage, FileSpreadsheet, File,
   ChevronRight, ChevronDown, FolderOpen, Folder,
-  X, Eye, CheckSquare, Square, Filter,
+  X, Square, Filter,
 } from 'lucide-react'
 import clsx from 'clsx'
 import { documents, folders, tagColors } from '../data/documentsData'
@@ -161,7 +160,6 @@ export default function DocumentsPage() {
   // Filter files
   const filtered = documents.filter(doc => {
     if (selectedFolder !== 'all') {
-      const folder = folders.find(f => f.id === selectedFolder)
       const childIds = folders.filter(f => f.parentId === selectedFolder).map(f => f.id)
       const validIds = [selectedFolder, ...childIds]
       if (!validIds.includes(doc.folderId)) return false

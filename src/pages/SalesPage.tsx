@@ -110,7 +110,7 @@ export default function SalesPage() {
 
   const [page,            setPage]            = useState(1)
   const [perPage,         setPerPage]         = useState('10')
-  const [selectedCols,    setSelectedCols]    = useState(17)
+  const [selectedCols,    _setSelectedCols]   = useState(17)
   const [showColPicker,   setShowColPicker]   = useState(false)
   const [sortKey,         setSortKey]         = useState<keyof Sale | ''>('')
   const [sortDir,         setSortDir]         = useState<'asc'|'desc'>('asc')

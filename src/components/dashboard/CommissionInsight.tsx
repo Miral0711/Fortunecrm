@@ -77,7 +77,7 @@ export default function CommissionInsight({
                   </linearGradient>
                 </defs>
                 <Area type="monotone" dataKey="v" stroke="#e07b39" strokeWidth={2} fill="url(#commGrad)" dot={false} />
-                <Tooltip formatter={(v: number) => [`$${v.toLocaleString()}`, 'Commission']} contentStyle={{ fontSize: 11 }} />
+                <Tooltip formatter={(v) => [`$${Number(v).toLocaleString()}`, 'Commission']} contentStyle={{ fontSize: 11 }} />
               </AreaChart>
             </ResponsiveContainer>
           </div>

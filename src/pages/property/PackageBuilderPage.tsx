@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, Search, Save, Send } from 'lucide-react'
 import PageHeader from '../../components/layout/PageHeader'
-import PriceBreakdown from '../../components/domain/PriceBreakdown'
 import { usePackageBuilder } from '../../hooks/usePackageBuilder'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -12,6 +11,7 @@ interface Lot {
   suburb: string
   state: string
   price: number
+  [key: string]: unknown
 }
 
 interface Design {
@@ -22,6 +22,7 @@ interface Design {
   sqm: number
   price: number
   thumbnail: string
+  [key: string]: unknown
 }
 
 interface Facade {
@@ -29,6 +30,7 @@ interface Facade {
   name: string
   price: number
   thumbnail: string
+  [key: string]: unknown
 }
 
 interface Inclusion {
@@ -36,17 +38,8 @@ interface Inclusion {
   name: string
   category: string
   price: number
+  [key: string]: unknown
 }
-
-interface PackageData {
-  lot: Lot | null
-  design: Design | null
-  facade: Facade | null
-  inclusions: Inclusion[]
-  adjustments: { label: string; value: number }[]
-}
-
-// ── Mock Data ─────────────────────────────────────────────────────────────────
 
 const LOTS: Lot[] = [
   { id: '1', name: 'Harlow Estate - 741', suburb: 'Tarneit', state: 'VIC', price: 450000 },

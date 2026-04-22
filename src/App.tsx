@@ -5,7 +5,6 @@ import GenericPage from './pages/GenericPage'
 import LoginPage from './pages/LoginPage'
 
 // Agent Portal
-import PortalShell from './portal/layout/PortalShell'
 import ListingsPage from './portal/pages/ListingsPage'
 import PropertyDetailPage from './portal/pages/PropertyDetailPage'
 import SavedSearchesPage from './portal/pages/SavedSearchesPage'

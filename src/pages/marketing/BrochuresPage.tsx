@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import {
-  Plus, Download, Upload, Eye, Trash2, MoreVertical,
+  Plus, Download, Upload, Eye, MoreVertical,
   FileText, Image, Type, DollarSign, ChevronDown,
   Search, X, Check, Palette, AlignLeft, Package,
 } from 'lucide-react'

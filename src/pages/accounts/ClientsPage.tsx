@@ -15,7 +15,6 @@ import { Users, UserCheck, TrendingUp, Activity } from 'lucide-react'
 const STATES   = ['ACT','NSW','NT','QLD','SA','TAS','VIC','WA']
 const STAGES   = ['New Lead','Contacted','Qualified','Proposal','Negotiation','Closed']
 const STATUSES = ['Active','Pending','Inactive','Review']
-const SOURCES  = ['API','PHP Website','Wordpress Website','Referral','Direct']
 const PER_PAGE_OPTIONS = [10, 25, 50, 100]
 
 const ALL_COLUMNS: { key: keyof ClientRow; label: string }[] = [

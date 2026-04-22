@@ -5,7 +5,7 @@ import {
   Trash2, Play, Pause, Copy, X, Layers,
   TrendingUp, Star, Clock, Filter, LayoutGrid, List,
   MessageSquare, CheckCircle, AlertCircle, XCircle,
-  ChevronLeft as BackIcon, Upload, PlusCircle, Trash,
+  ChevronLeft as BackIcon, PlusCircle, Trash,
 } from 'lucide-react'
 import StatusBadge from '../components/ui/StatusBadge'
 import type { BadgeVariant } from '../types'

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Globe, Lock, Users, CheckCircle2, Info } from 'lucide-react'
+import { Globe, Lock, Users, CheckCircle2 } from 'lucide-react'
 import clsx from 'clsx'
 import PageHeader from '../components/layout/PageHeader'
-import AgentSelector, { AgentTag } from '../components/domain/AgentSelector'
+import AgentSelector from '../components/domain/AgentSelector'
 import InfoBanner from '../components/common/InfoBanner'
 import type { Agent } from '../components/domain/AgentSelector'
 

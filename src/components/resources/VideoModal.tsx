@@ -37,7 +37,6 @@ export default function VideoModal({ resource, onClose }: Props) {
   const isYT      = resource.isUrl && isYouTubeUrl(resource.urlFile)
   const embedUrl  = isYT ? getYouTubeEmbedUrl(resource.urlFile) : null
   const isNativeVideo = resource.type === 'video' && !resource.isUrl
-  const isVideo   = isYT || isNativeVideo
 
   return (
     <div

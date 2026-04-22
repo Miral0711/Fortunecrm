@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   Mail, Lock, Eye, EyeOff, ArrowRight, Loader2,
-  Users, TrendingUp, Bot, BarChart2, CheckCircle2,
+  Users, TrendingUp, Bot, CheckCircle2,
 } from 'lucide-react'
 import logoFull from '../../logo.png'
 

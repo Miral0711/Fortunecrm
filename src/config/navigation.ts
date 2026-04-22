@@ -1,10 +1,9 @@
 import {
-  LayoutDashboard, Users, UserCheck, UserPlus, Mail, Briefcase,
-  UserCog, Handshake, Code2, ShieldCheck, Building2,
-  Megaphone, Globe, FileText, Building, MapPin, Heart, Star, Home,
-  TrendingUp, BarChart2, StickyNote, LogIn, Monitor, BookMarked, CheckSquare, History,
-  Layers, FormInput, Search, ClipboardList, CreditCard,
-  Package, Send, Clock, Bot, Tv2, Settings2, Library, ExternalLink, FolderOpen, Share2,
+  LayoutDashboard, Users,
+  Megaphone, Globe, Building,
+  TrendingUp, BarChart2,
+  FormInput,
+  Package, Send, Clock, Bot, Tv2, Settings2, ExternalLink, FolderOpen, Share2,
 } from 'lucide-react'
 import type { NavGroup } from '../types'
 
