@@ -55,13 +55,13 @@ function SelectField({ label, options, value, onChange }: {
   label: string; options: string[]; value: string; onChange: (v: string) => void
 }) {
   return (
-    <div className="flex flex-col gap-1 min-w-0">
+    <div className="flex flex-col gap-0.5 min-w-0">
       <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">{label}</label>
       <div className="relative">
         <select
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="w-full appearance-none pl-3 pr-8 py-2 text-xs bg-white border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer"
+          className="w-full appearance-none pl-3 pr-8 py-1.5 text-xs bg-white border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer"
         >
           <option value="">Select {label}</option>
           {options.map(o => <option key={o} value={o}>{o}</option>)}
@@ -137,32 +137,32 @@ export default function PropertyEnquiryPage() {
   const thClass = "px-4 py-3 text-left text-[11px] font-semibold text-gray-500 uppercase tracking-wider whitespace-nowrap cursor-pointer select-none hover:text-gray-700"
 
   return (
-    <div onClick={() => openMenu && setOpenMenu(null)}>
+    <div className="h-full min-h-0 flex flex-col gap-4" onClick={() => openMenu && setOpenMenu(null)}>
       <PageHeader
         title="Property Enquiry"
         subtitle="Incoming property enquiry forms"
       />
 
       {/* Filter Card */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-4">
-        <div className="flex items-center justify-end mb-4">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-3.5">
+        <div className="flex items-center justify-end mb-3">
           <button
             onClick={() => navigate('/forms/property-enquiry/create')}
-            className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             Create Enquiry
           </button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <SelectField label="Agent"  options={AGENTS}   value={agent}  onChange={v => { setAgent(v);  setPage(1) }} />
           <SelectField label="Client" options={CLIENTS}  value={client} onChange={v => { setClient(v); setPage(1) }} />
           <SelectField label="Status" options={STATUSES} value={status} onChange={v => { setStatus(v); setPage(1) }} />
         </div>
-        <div className="flex justify-end items-center gap-2 mt-4">
+        <div className="flex justify-end items-center gap-2 mt-3">
           <button
             onClick={handleClear}
-            className="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
+            className="px-4 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
           >
             Clear
           </button>
@@ -170,7 +170,7 @@ export default function PropertyEnquiryPage() {
       </div>
 
       {/* Table Card */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden flex-1 min-h-0 flex flex-col">
         {/* Per-page selector */}
         <div className="flex justify-end px-4 pt-3 pb-1">
           <div className="relative">
@@ -186,7 +186,7 @@ export default function PropertyEnquiryPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
+        <div className="flex-1 min-h-0 overflow-auto">
           <table className="w-full text-sm">
             <thead className="border-b border-gray-100 bg-gray-50/50">
               <tr>

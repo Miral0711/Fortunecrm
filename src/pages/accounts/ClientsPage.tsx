@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
 import {
   ChevronDown, MoreVertical,
-  LayoutList, LayoutGrid, Table2, X, SlidersHorizontal,
+  LayoutList, LayoutGrid, Table2, SlidersHorizontal,
 } from 'lucide-react'
 import { clientsFullData } from '../../data/accountsData'
 import type { ClientRow } from '../../data/accountsData'
@@ -40,13 +40,13 @@ function SelectField({ label, options, value, onChange }: {
   label: string; options: string[]; value: string; onChange: (v: string) => void
 }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-0.5">
       <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">{label}</label>
       <div className="relative">
         <select
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="w-full appearance-none pl-3 pr-8 py-2 text-xs bg-white border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer"
+          className="w-full appearance-none pl-3 pr-8 py-1.5 text-xs bg-white border border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer"
         >
           <option value="">Select {label}</option>
           {options.map(o => <option key={o} value={o}>{o}</option>)}
@@ -61,13 +61,13 @@ function TextField({ label, value, onChange }: {
   label: string; value: string; onChange: (v: string) => void
 }) {
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-0.5">
       <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">{label}</label>
       <input
         type="text"
         value={value}
         onChange={e => onChange(e.target.value)}
-        className="w-full px-3 py-2 text-xs bg-white border border-gray-200 rounded-lg text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400"
+        className="w-full px-3 py-1.5 text-xs bg-white border border-gray-200 rounded-lg text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400"
         placeholder=""
       />
     </div>
@@ -154,8 +154,8 @@ export default function ClientsPage() {
       </div>
 
       {/* ── Search panel ── */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
           <TextField label="First Name"       value={firstName}       onChange={v => { setFirstName(v);       setPage(1) }} />
           <TextField label="Last Name"        value={lastName}        onChange={v => { setLastName(v);        setPage(1) }} />
           <SelectField label="State"          options={STATES}        value={state}          onChange={v => { setState(v);          setPage(1) }} />
@@ -167,15 +167,7 @@ export default function ClientsPage() {
           <SelectField label="Affiliate"      options={['Affiliate A','Affiliate B']}  value={affiliate}      onChange={v => { setAffiliate(v);      setPage(1) }} />
           <SelectField label="Agent"          options={['Agent X','Agent Y']}          value={agent}          onChange={v => { setAgent(v);          setPage(1) }} />
         </div>
-        <div className="flex items-center justify-end mt-3 gap-2">
-          {hasFilters && (
-            <button
-              onClick={clearFilters}
-              className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-gray-500 hover:text-gray-700 transition-colors"
-            >
-              <X className="w-3 h-3" /> Clear
-            </button>
-          )}
+        <div className="flex items-center justify-end mt-3">
           <button
             onClick={clearFilters}
             className="px-4 py-1.5 text-xs font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
@@ -287,7 +279,7 @@ export default function ClientsPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
+        <div className="max-h-[60vh] overflow-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/50">

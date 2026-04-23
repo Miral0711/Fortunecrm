@@ -477,7 +477,7 @@ export default function BrochuresPage() {
           </div>
 
           {/* Table */}
-          <div className="overflow-x-auto">
+          <div className="max-h-[60vh] overflow-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/50">

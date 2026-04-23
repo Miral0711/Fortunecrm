@@ -13,7 +13,7 @@ interface Props<T> {
 
 export default function DataTable<T>({ columns, data, keyField, loading, onRowClick, className }: Props<T>) {
   return (
-    <div className={clsx('overflow-x-auto', className)}>
+    <div className={clsx('max-h-[60vh] overflow-auto', className)}>
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-100">

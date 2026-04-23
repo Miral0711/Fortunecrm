@@ -24,7 +24,7 @@ type SortDir = 'asc' | 'desc'
 
 // ── Data ──────────────────────────────────────────────────────────────────────
 
-const DATA: WPSite[] = [
+const BASE_DATA: WPSite[] = [
   { id:'1',  user:'Jinaikumar Patel',      theme:'Metro', title:'Equity That Grow With You',                    url:'equitymaxx.myinvestment.properties',              status:'warning', statusLabel:'Initializing', usernameCreated:'',     passwordCreated:'',             createdOn:'25 Mar 2026 12:19 pm' },
   { id:'2',  user:'Chris Bockisch',        theme:'Luna',  title:'HPO',                                          url:'hpo.myinvestment.properties',                     status:'warning', statusLabel:'Initializing', usernameCreated:'',     passwordCreated:'',             createdOn:'24 Feb 2026 01:06 am' },
   { id:'3',  user:'Lorraine Hollitt',      theme:'West',  title:'Life Without Boundaries',                      url:'lwbcontent.myinvestment.properties',               status:'warning', statusLabel:'Initializing', usernameCreated:'',     passwordCreated:'',             createdOn:'14 Feb 2026 04:59 pm' },
@@ -47,8 +47,37 @@ const DATA: WPSite[] = [
   { id:'20', user:'Ethan Brown',           theme:'Aura',  title:'Gallery Group Investments',                    url:'gallerygroup.myinvestment.properties',            status:'success', statusLabel:'Active',       usernameCreated:'ethan',passwordCreated:'Jp9lRxGf5wYb', createdOn:'03 Aug 2025 03:15 pm' },
 ]
 
-const TOTAL = 126
-const PER_PAGE_OPTS = [10, 25, 50]
+const MOCK_USERS = [
+  'Mason Clark', 'Isabella Lee', 'Henry Scott', 'Mia Turner', 'Lucas Evans',
+  'Amelia Davis', 'Benjamin Hall', 'Charlotte King', 'Jack Wright', 'Harper Green',
+]
+
+const MOCK_THEMES: WPSite['theme'][] = ['Metro', 'Luna', 'West', 'Aura']
+
+const EXTRA_DATA: WPSite[] = Array.from({ length: 180 }, (_, index) => {
+  const i = index + 1
+  const theme = MOCK_THEMES[index % MOCK_THEMES.length]
+  const user = MOCK_USERS[index % MOCK_USERS.length]
+  const isInitializing = i % 9 === 0
+  const isInactive = i % 11 === 0
+
+  return {
+    id: `m-${i}`,
+    user,
+    theme,
+    title: `${theme} Investment Site ${i}`,
+    url: `site${i}.myinvestment.properties`,
+    status: isInitializing ? 'warning' : isInactive ? 'danger' : 'success',
+    statusLabel: isInitializing ? 'Initializing' : isInactive ? 'Inactive' : 'Active',
+    usernameCreated: isInitializing ? '' : user.split(' ')[0].toLowerCase(),
+    passwordCreated: isInitializing ? '' : `Pwd${1000 + i}X${(i * 7).toString(36)}`,
+    createdOn: `${String((i % 28) + 1).padStart(2, '0')} Jul 2025 10:${String((i * 3) % 60).padStart(2, '0')} am`,
+  }
+})
+
+const DATA: WPSite[] = [...BASE_DATA, ...EXTRA_DATA]
+
+const PER_PAGE_OPTS = [25, 50, 100]
 
 // ── Sort icon ─────────────────────────────────────────────────────────────────
 
@@ -64,7 +93,7 @@ function SortIcon({ col, sortKey, sortDir }: { col: SortKey; sortKey: SortKey; s
 export default function WordPressPage() {
   const [search,   setSearch]   = useState('')
   const [page,     setPage]     = useState(1)
-  const [perPage,  setPerPage]  = useState(10)
+  const [perPage,  setPerPage]  = useState(25)
   const [sortKey,  setSortKey]  = useState<SortKey>('createdOn')
   const [sortDir,  setSortDir]  = useState<SortDir>('desc')
 
@@ -112,8 +141,8 @@ export default function WordPressPage() {
   ]
 
   return (
-    <div className="space-y-4">
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm">
+    <div className="h-full min-h-0">
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm h-full min-h-0 flex flex-col">
         {/* Toolbar */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
           <SearchInput
@@ -135,7 +164,7 @@ export default function WordPressPage() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto">
+        <div className="flex-1 min-h-0 overflow-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-100 bg-gray-50/40">
@@ -245,7 +274,7 @@ export default function WordPressPage() {
             Showing{' '}
             <span className="font-semibold text-gray-700">{(page - 1) * perPage + 1}</span> to{' '}
             <span className="font-semibold text-gray-700">{Math.min(page * perPage, filtered.length)}</span> of{' '}
-            <span className="font-semibold text-gray-700">{TOTAL}</span> results
+            <span className="font-semibold text-gray-700">{filtered.length}</span> results
           </p>
         </div>
       </div>

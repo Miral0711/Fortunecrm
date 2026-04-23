@@ -197,7 +197,7 @@ export default function BotCategoryPage() {
       {/* ── Table view ── */}
       {view === 'table' && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
+          <div className="max-h-[60vh] overflow-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100 bg-gray-50/40">
