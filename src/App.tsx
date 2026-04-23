@@ -34,6 +34,7 @@ import ConstructionLibraryPage from './pages/property/ConstructionLibraryPage'
 
 // Sales
 import SalesPage from './pages/SalesPage'
+import SalesCreatePage from './pages/SalesCreatePage'
 
 // Tools
 import ResourcesPage from './pages/ResourcesPage'
@@ -111,6 +112,7 @@ export default function App() {
 
           {/* Sales */}
           <Route path="sales" element={<SalesPage />} />
+          <Route path="sales/create" element={<SalesCreatePage />} />
 
           {/* Reports */}
           <Route path="reports/network-activity" element={<NetworkActivityPage />} />

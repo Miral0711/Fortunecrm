@@ -8,6 +8,7 @@ function getPageTitle(pathname: string): string {
   if (pathname.startsWith('/portal/listings/')) return 'Property Detail'
   if (pathname === '/portal/listings') return 'Listings'
   if (pathname === '/portal/saved-searches') return 'Saved Searches'
+  if (pathname === '/sales/create') return 'Create'
   if (pathname === '/documents') return 'Documents'
   if (pathname === '/bot-in-a-box/add') return 'Create New Bot'
   for (const group of navigation) {

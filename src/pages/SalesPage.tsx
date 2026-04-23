@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { ChevronDown, ChevronLeft, ChevronRight, MoreVertical, Plus, ArrowUpDown, Eye, Pencil, Trash2 } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import PageWrapper from '../components/layout/PageWrapper'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -101,6 +102,7 @@ function StyledSelect({
 // ── Page ──────────────────────────────────────────────────────────────────────
 
 export default function SalesPage() {
+  const navigate = useNavigate()
   const [status,          setStatus]          = useState('')
   const [showCrashed,     setShowCrashed]     = useState(false)
   const [subscriber,      setSubscriber]      = useState('')
@@ -216,8 +218,11 @@ export default function SalesPage() {
 
           {/* Form actions aligned right */}
           <div className="col-start-3 flex items-end justify-end gap-2">
-            <button className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors shadow-sm">
-              <Plus className="w-4 h-4" /> Add
+            <button
+              onClick={() => navigate('/sales/create')}
+              className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors shadow-sm"
+            >
+              <Plus className="w-4 h-4" /> Create Reservation
             </button>
             <button
               onClick={clearFilters}

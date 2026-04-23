@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react'
 import { Sparkles, Search as SearchIcon } from 'lucide-react'
 import PageHeader from '../components/layout/PageHeader'
+import PageWrapper from '../components/layout/PageWrapper'
 import CategorySidebar from '../components/resources/CategorySidebar'
 import { CATEGORIES, RESOURCES as ALL_RESOURCES } from '../data/resourcesData'
 import ResourceCard from '../components/resources/ResourceCard'
@@ -86,7 +87,7 @@ export default function ResourcesPage() {
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
     <>
-      <div className="space-y-4">
+      <PageWrapper>
         <PageHeader
           title="Learning Hub"
           subtitle="Training videos, guides, and documentation for Fusion CRM"
@@ -195,7 +196,7 @@ export default function ResourcesPage() {
 
           </div>
         </div>
-      </div>
+      </PageWrapper>
 
       {/* Video modal — rendered outside the scroll container */}
       <VideoModal resource={selectedResource} onClose={closeModal} />

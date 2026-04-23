@@ -418,31 +418,31 @@ export default function BrochuresPage() {
       <PageHeader
         title="Brochures"
         breadcrumbs={[{ label: 'Marketing Tools' }, { label: 'Brochures' }]}
-        actions={
-          <button
-            onClick={() => setUploadOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
-          >
-            <Plus className="w-3.5 h-3.5" /> Add Brochure
-          </button>
-        }
       />
 
       {/* Tab bar */}
-      <div className="flex items-center gap-1 border-b border-gray-200">
-        {TABS.map(t => (
-          <button
-            key={t.key}
-            onClick={() => setTab(t.key)}
-            className={`px-4 py-2 text-xs font-medium transition-colors border-b-2 -mb-px ${
-              tab === t.key
-                ? 'border-orange-500 text-orange-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
+      <div className="flex items-end justify-between border-b border-gray-200">
+        <div className="flex items-center gap-1">
+          {TABS.map(t => (
+            <button
+              key={t.key}
+              onClick={() => setTab(t.key)}
+              className={`px-4 py-2 text-xs font-medium transition-colors border-b-2 -mb-px ${
+                tab === t.key
+                  ? 'border-orange-500 text-orange-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={() => setUploadOpen(true)}
+          className="mb-1.5 flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
+        >
+          <Plus className="w-3.5 h-3.5" /> Add Brochure
+        </button>
       </div>
 
       {/* ── LIST TAB ─────────────────────────────────────────────────────────── */}
