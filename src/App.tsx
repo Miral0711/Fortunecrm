@@ -51,6 +51,7 @@ import PropertyEnquiryCreatePage from './pages/forms/PropertyEnquiryCreatePage'
 // Other
 import OtherServicesPage from './pages/OtherServicesPage'
 import BotInABoxPage from './pages/BotInABoxPage'
+import AddBotPage from './pages/AddBotPage'
 import AffiliatesPage from './pages/accounts/AffiliatesPage'
 import SubscribersPage from './pages/accounts/SubscribersPage'
 import BDMsPage from './pages/accounts/BDMsPage'
@@ -137,6 +138,7 @@ export default function App() {
           <Route path="mail-list" element={<GenericPage title="Mail List" subtitle="Email subscriber lists" />} />
           <Route path="mail-status" element={<GenericPage title="Mail Status" subtitle="Email delivery status" />} />
           <Route path="bot-in-a-box" element={<BotInABoxPage />} />
+          <Route path="bot-in-a-box/add" element={<AddBotPage />} />
           <Route path="ad-management" element={<GenericPage title="Ad Management" subtitle="Advertising campaign management" />} />
           <Route path="other-services" element={<OtherServicesPage />} />
 
