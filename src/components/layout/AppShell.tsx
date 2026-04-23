@@ -1,44 +1,47 @@
-import { useState } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
-import Sidebar from './Sidebar'
-import Topbar from './Topbar'
-import { navigation } from '../../config/navigation'
+import { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import Sidebar from "./Sidebar";
+import Topbar from "./Topbar";
+import { navigation } from "../../config/navigation";
 
 function getPageTitle(pathname: string): string {
-  if (pathname.startsWith('/portal/listings/')) return 'Property Detail'
-  if (pathname === '/portal/listings') return 'Listings'
-  if (pathname === '/portal/saved-searches') return 'Saved Searches'
-  if (pathname === '/sales/create') return 'Create'
-  if (pathname === '/documents') return 'Documents'
-  if (pathname === '/bot-in-a-box/add') return 'Create New Bot'
+  if (pathname.startsWith("/portal/listings/")) return "Property Detail";
+  if (pathname === "/portal/listings") return "Listings";
+  if (pathname === "/portal/saved-searches") return "Saved Searches";
+  if (pathname === "/sales/create") return "Create";
+  if (pathname === "/documents") return "Documents";
+  if (pathname === "/bot-in-a-box/add") return "Create New Bot";
   for (const group of navigation) {
     for (const item of group.items) {
-      if (item.path === pathname) return item.label
+      if (item.path === pathname) return item.label;
       if (item.children) {
-        const child = item.children.find(c => c.path === pathname)
-        if (child) return child.label
+        const child = item.children.find((c) => c.path === pathname);
+        if (child) return child.label;
       }
     }
   }
-  return 'Fusion CRM'
+  return "Fusion CRM";
 }
 
 export default function AppShell() {
-  const [collapsed, setCollapsed] = useState(false)
-  const location = useLocation()
-  const title = getPageTitle(location.pathname)
+  const [collapsed, setCollapsed] = useState(false);
+  const location = useLocation();
+  const title = getPageTitle(location.pathname);
   const isStaticPropertyDashboardPage =
-    location.pathname === '/property/projects' || location.pathname === '/property/lots'
+    location.pathname === "/property/projects" ||
+    location.pathname === "/property/lots";
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#f4f5f7]">
-      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} />
+      <Sidebar collapsed={collapsed} onToggle={() => setCollapsed((c) => !c)} />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Topbar title={title} />
-        <main className={`flex-1 p-3 md:p-4 ${isStaticPropertyDashboardPage ? 'overflow-hidden' : 'overflow-y-auto'}`}>
+        <main
+          className={`flex-1 p-3 md:p-4 ${isStaticPropertyDashboardPage ? "overflow-hidden" : "overflow-y-auto"}`}
+        >
           <Outlet />
         </main>
       </div>
     </div>
-  )
+  );
 }
