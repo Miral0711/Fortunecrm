@@ -149,7 +149,7 @@ export default function PackageBuilderPage() {
         ]}
       />
 
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 xl:grid-cols-12 items-start gap-5">
         {/* Left Panel - Builder */}
         <div className="xl:col-span-7 space-y-3">
           <div className="bg-white rounded-lg border border-gray-200 px-4 py-3">
@@ -320,8 +320,8 @@ export default function PackageBuilderPage() {
         </div>
 
         {/* Right Panel - Preview */}
-        <div className="xl:col-span-5">
-          <div className="sticky top-5 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <div className="xl:col-span-5 xl:self-start">
+          <div className="xl:sticky xl:top-5 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
             {/* Summary Header */}
             <div className="px-5 py-4 border-b border-gray-100">
               <h3 className="text-sm font-semibold text-gray-800">Package Summary</h3>
