@@ -37,6 +37,13 @@ export default function VideoModal({ resource, onClose }: Props) {
   const isYT      = resource.isUrl && isYouTubeUrl(resource.urlFile)
   const embedUrl  = isYT ? getYouTubeEmbedUrl(resource.urlFile) : null
   const isNativeVideo = resource.type === 'video' && !resource.isUrl
+  const fallbackIconByType: Record<Resource['type'], string> = {
+    video: '🎬',
+    document: '📄',
+    form: '📝',
+    ebook: '📘',
+    presentation: '📊',
+  }
 
   return (
     <div
@@ -112,7 +119,7 @@ export default function VideoModal({ resource, onClose }: Props) {
           ) : (
             // ── Non-video fallback (doc / form / ebook) ──────────────────────
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-gray-950">
-              <span className="text-5xl">{resource.thumbnail ?? '📄'}</span>
+              <span className="text-5xl">{fallbackIconByType[resource.type]}</span>
               <p className="text-sm text-gray-400">{resource.title}</p>
             </div>
           )}

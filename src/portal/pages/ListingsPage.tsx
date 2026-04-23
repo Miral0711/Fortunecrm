@@ -16,7 +16,6 @@ export default function ListingsPage() {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [project, setProject] = useState('All Projects')
   const [propertyType, setPropertyType] = useState('All Types')
-  const [savedOnly, setSavedOnly] = useState(false)
 
   const filtered = useMemo(() => {
     return listings.filter(l => {

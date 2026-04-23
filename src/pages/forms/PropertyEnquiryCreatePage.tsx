@@ -358,7 +358,7 @@ export default function PropertyEnquiryCreatePage() {
             <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider">Unit/Lot Number</span>
           </div>
 
-          {requests.map((row, idx) => (
+          {requests.map((row) => (
             <PropertyRequestRow
               key={row.id}
               row={row}

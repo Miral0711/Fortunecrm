@@ -78,7 +78,7 @@ const PROGRESS_STEPS = [
 // Guided conversation engine
 // ─────────────────────────────────────────────────────────────────────────────
 
-function getNextStep(step: ConversationStep, config: BotConfig): ConversationStep {
+function getNextStep(step: ConversationStep): ConversationStep {
   if (step === 'idle') return 'named'
   if (step === 'named') return 'described'
   if (step === 'described') return 'categorised'
@@ -846,7 +846,7 @@ export default function AddBotPage() {
 
     setTimeout(() => {
       const { text: replyText, followUps, configUpdates } = buildAssistantReply(text, step, config)
-      const nextStep = getNextStep(step, config)
+      const nextStep = getNextStep(step)
 
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),

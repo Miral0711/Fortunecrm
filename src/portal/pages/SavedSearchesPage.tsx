@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import {
-  Search, Bell, Trash2, Calendar, MapPin,
-  ChevronRight, ArrowRight,
+  Search, Bell, Trash2, Calendar, ArrowRight,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import PageWrapper from '../../components/layout/PageWrapper'
