@@ -1,4 +1,16 @@
 import clsx from 'clsx'
+import { Library, Rocket, DollarSign, Globe, Users, Mail, Settings } from 'lucide-react'
+import type { CategoryIconKey } from '../../data/resourcesData'
+
+const ICON_MAP: Record<CategoryIconKey, React.ReactNode> = {
+  library:  <Library    className="w-3.5 h-3.5" />,
+  rocket:   <Rocket     className="w-3.5 h-3.5" />,
+  dollar:   <DollarSign className="w-3.5 h-3.5" />,
+  globe:    <Globe      className="w-3.5 h-3.5" />,
+  users:    <Users      className="w-3.5 h-3.5" />,
+  mail:     <Mail       className="w-3.5 h-3.5" />,
+  settings: <Settings   className="w-3.5 h-3.5" />,
+}
 
 export interface SubCategory {
   id: string
@@ -8,7 +20,7 @@ export interface SubCategory {
 export interface Category {
   id: string
   label: string
-  icon: string
+  icon: CategoryIconKey
   subcategories: SubCategory[]
 }
 
@@ -52,7 +64,7 @@ export default function CategorySidebar({
                 )}
               >
                 <span className="flex items-center gap-2 min-w-0">
-                  <span className="text-sm leading-none flex-shrink-0">{cat.icon}</span>
+                  <span className="flex-shrink-0">{ICON_MAP[cat.icon]}</span>
                   <span className="truncate">{cat.label}</span>
                 </span>
                 {countFor && (

@@ -1,4 +1,9 @@
-import { Play, FileText, ClipboardList, BookOpen, Monitor, ExternalLink, Clock } from 'lucide-react'
+import {
+  Play, FileText, ClipboardList, BookOpen, Monitor, ExternalLink, Clock,
+  Lock, RefreshCw, CheckSquare, Pencil, Target, Globe, Handshake,
+  User, Palette, Bot, Settings, BarChart2, Home, Building2, CreditCard,
+  DollarSign, Clipboard, Mail, BookMarked, Rocket, Library,
+} from 'lucide-react'
 import clsx from 'clsx'
 import type { Resource } from '../../data/resourcesData'
 
@@ -16,9 +21,41 @@ const TYPE_META: Record<Resource['type'], { icon: React.ReactNode; color: string
   presentation: { icon: <FileText className="w-3 h-3" />,      color: 'text-teal-500 bg-teal-50',      label: 'Slides' },
 }
 
+const THUMBNAIL_ICON: Record<string, { icon: React.ReactNode; bg: string; color: string }> = {
+  '1':  { icon: <Lock className="w-8 h-8" />,          bg: 'bg-blue-50',    color: 'text-blue-400'    },
+  '2':  { icon: <Monitor className="w-8 h-8" />,       bg: 'bg-orange-50',  color: 'text-orange-400'  },
+  '3':  { icon: <Home className="w-8 h-8" />,          bg: 'bg-green-50',   color: 'text-green-400'   },
+  '4':  { icon: <Clipboard className="w-8 h-8" />,     bg: 'bg-yellow-50',  color: 'text-yellow-500'  },
+  '5':  { icon: <DollarSign className="w-8 h-8" />,    bg: 'bg-emerald-50', color: 'text-emerald-400' },
+  '6':  { icon: <FileText className="w-8 h-8" />,      bg: 'bg-gray-50',    color: 'text-gray-400'    },
+  '7':  { icon: <Globe className="w-8 h-8" />,         bg: 'bg-sky-50',     color: 'text-sky-400'     },
+  '8':  { icon: <Pencil className="w-8 h-8" />,        bg: 'bg-violet-50',  color: 'text-violet-400'  },
+  '9':  { icon: <Target className="w-8 h-8" />,        bg: 'bg-red-50',     color: 'text-red-400'     },
+  '10': { icon: <User className="w-8 h-8" />,          bg: 'bg-indigo-50',  color: 'text-indigo-400'  },
+  '11': { icon: <Handshake className="w-8 h-8" />,     bg: 'bg-teal-50',    color: 'text-teal-400'    },
+  '12': { icon: <RefreshCw className="w-8 h-8" />,     bg: 'bg-cyan-50',    color: 'text-cyan-400'    },
+  '13': { icon: <CheckSquare className="w-8 h-8" />,   bg: 'bg-green-50',   color: 'text-green-400'   },
+  '14': { icon: <FileText className="w-8 h-8" />,      bg: 'bg-gray-50',    color: 'text-gray-400'    },
+  '15': { icon: <Mail className="w-8 h-8" />,          bg: 'bg-orange-50',  color: 'text-orange-400'  },
+  '16': { icon: <Palette className="w-8 h-8" />,       bg: 'bg-pink-50',    color: 'text-pink-400'    },
+  '17': { icon: <Bot className="w-8 h-8" />,           bg: 'bg-purple-50',  color: 'text-purple-400'  },
+  '18': { icon: <Settings className="w-8 h-8" />,      bg: 'bg-gray-50',    color: 'text-gray-400'    },
+  '19': { icon: <ClipboardList className="w-8 h-8" />, bg: 'bg-yellow-50',  color: 'text-yellow-500'  },
+  '20': { icon: <CreditCard className="w-8 h-8" />,    bg: 'bg-blue-50',    color: 'text-blue-400'    },
+  '21': { icon: <Lock className="w-8 h-8" />,          bg: 'bg-slate-50',   color: 'text-slate-400'   },
+  '22': { icon: <Building2 className="w-8 h-8" />,     bg: 'bg-orange-50',  color: 'text-orange-400'  },
+  '23': { icon: <BarChart2 className="w-8 h-8" />,     bg: 'bg-blue-50',    color: 'text-blue-400'    },
+  '24': { icon: <BookMarked className="w-8 h-8" />,    bg: 'bg-purple-50',  color: 'text-purple-400'  },
+  '25': { icon: <Library className="w-8 h-8" />,       bg: 'bg-indigo-50',  color: 'text-indigo-400'  },
+  '26': { icon: <Rocket className="w-8 h-8" />,        bg: 'bg-orange-50',  color: 'text-orange-400'  },
+}
+
+const DEFAULT_THUMB = { icon: <FileText className="w-8 h-8" />, bg: 'bg-gray-50', color: 'text-gray-300' }
+
 export default function ResourceCard({ resource, featured = false, onWatch }: Props) {
   const meta    = TYPE_META[resource.type]
   const isVideo = resource.type === 'video'
+  const thumb   = THUMBNAIL_ICON[resource.id] ?? DEFAULT_THUMB
 
   return (
     <div
@@ -31,12 +68,11 @@ export default function ResourceCard({ resource, featured = false, onWatch }: Pr
     >
       {/* Thumbnail */}
       <div className={clsx(
-        'relative flex items-center justify-center bg-gradient-to-br from-gray-50 to-orange-50/40 flex-shrink-0',
+        'relative flex items-center justify-center flex-shrink-0 rounded-t-xl',
+        thumb.bg,
         featured ? 'h-36' : 'h-28'
       )}>
-        <span className={clsx('select-none', featured ? 'text-5xl' : 'text-4xl')}>
-          {resource.thumbnail ?? '📄'}
-        </span>
+        <span className={clsx(thumb.color, 'opacity-70')}>{thumb.icon}</span>
 
         {/* Play overlay — videos only */}
         {isVideo && (

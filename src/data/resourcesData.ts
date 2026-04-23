@@ -4,6 +4,15 @@ export type ResourceType = 'video' | 'document' | 'form' | 'ebook' | 'presentati
 export type DifficultyLevel = 'Beginner' | 'Intermediate' | 'Advanced'
 export type UserRole = 'Admin' | 'Agent' | 'Marketing'
 
+export type CategoryIconKey =
+  | 'library'
+  | 'rocket'
+  | 'dollar'
+  | 'globe'
+  | 'users'
+  | 'mail'
+  | 'settings'
+
 export interface Resource {
   id: string
   title: string
@@ -12,14 +21,13 @@ export interface Resource {
   category: string
   subcategory: string
   tags: string[]
-  duration?: string   // e.g. "4 min", "12 min"
-  durationMin?: number // numeric for filtering
+  duration?: string
+  durationMin?: number
   level: DifficultyLevel
   views: number
-  thumbnail?: string  // emoji fallback
   urlFile: string
   isUrl: boolean
-  createdAt: string   // ISO date string
+  createdAt: string
   roles: UserRole[]
 }
 
@@ -33,76 +41,41 @@ export interface SubCategory {
 export interface Category {
   id: string
   label: string
-  icon: string
+  icon: CategoryIconKey
   subcategories: SubCategory[]
 }
 
 export const CATEGORIES: Category[] = [
-  {
-    id: 'all',
-    label: 'All Resources',
-    icon: '📚',
-    subcategories: [],
-  },
-  {
-    id: 'getting-started',
-    label: 'Getting Started',
-    icon: '🚀',
-    subcategories: [
-      { id: 'login-profile', label: 'Login & Profile' },
-      { id: 'platform-overview', label: 'Platform Overview' },
-    ],
-  },
-  {
-    id: 'sales-leads',
-    label: 'Sales & Leads',
-    icon: '💰',
-    subcategories: [
-      { id: 'property-search', label: 'Property Search' },
-      { id: 'commissions', label: 'Commissions' },
-      { id: 'reservations', label: 'Reservations' },
-    ],
-  },
-  {
-    id: 'website-pages',
-    label: 'Website & Landing Pages',
-    icon: '🌐',
-    subcategories: [
-      { id: 'wordpress', label: 'WordPress' },
-      { id: 'landing-pages', label: 'Landing Pages' },
-      { id: 'api-keys', label: 'API Keys' },
-    ],
-  },
-  {
-    id: 'client-management',
-    label: 'Client Management',
-    icon: '👥',
-    subcategories: [
-      { id: 'adding-clients', label: 'Adding Clients' },
-      { id: 'referral-partners', label: 'Referral Partners' },
-      { id: 'account-updates', label: 'Account Updates' },
-    ],
-  },
-  {
-    id: 'marketing-email',
-    label: 'Marketing & Email',
-    icon: '📧',
-    subcategories: [
-      { id: 'email-settings', label: 'Email Settings' },
-      { id: 'mail-lists', label: 'Mail Lists' },
-      { id: 'brochures', label: 'Brochures' },
-    ],
-  },
-  {
-    id: 'admin-settings',
-    label: 'Admin & Settings',
-    icon: '⚙️',
-    subcategories: [
-      { id: 'bot-in-a-box', label: 'Bot In A Box' },
-      { id: 'forms', label: 'Forms & Templates' },
-      { id: 'system-docs', label: 'System Docs' },
-    ],
-  },
+  { id: 'all',              label: 'All Resources',          icon: 'library',  subcategories: [] },
+  { id: 'getting-started',  label: 'Getting Started',        icon: 'rocket',   subcategories: [
+    { id: 'login-profile',     label: 'Login & Profile' },
+    { id: 'platform-overview', label: 'Platform Overview' },
+  ]},
+  { id: 'sales-leads',      label: 'Sales & Leads',          icon: 'dollar',   subcategories: [
+    { id: 'property-search', label: 'Property Search' },
+    { id: 'commissions',     label: 'Commissions' },
+    { id: 'reservations',    label: 'Reservations' },
+  ]},
+  { id: 'website-pages',    label: 'Website & Landing Pages', icon: 'globe',   subcategories: [
+    { id: 'wordpress',      label: 'WordPress' },
+    { id: 'landing-pages',  label: 'Landing Pages' },
+    { id: 'api-keys',       label: 'API Keys' },
+  ]},
+  { id: 'client-management', label: 'Client Management',     icon: 'users',    subcategories: [
+    { id: 'adding-clients',    label: 'Adding Clients' },
+    { id: 'referral-partners', label: 'Referral Partners' },
+    { id: 'account-updates',   label: 'Account Updates' },
+  ]},
+  { id: 'marketing-email',  label: 'Marketing & Email',      icon: 'mail',     subcategories: [
+    { id: 'email-settings', label: 'Email Settings' },
+    { id: 'mail-lists',     label: 'Mail Lists' },
+    { id: 'brochures',      label: 'Brochures' },
+  ]},
+  { id: 'admin-settings',   label: 'Admin & Settings',       icon: 'settings', subcategories: [
+    { id: 'bot-in-a-box', label: 'Bot In A Box' },
+    { id: 'forms',        label: 'Forms & Templates' },
+    { id: 'system-docs',  label: 'System Docs' },
+  ]},
 ]
 
 // ── Mock Resources ────────────────────────────────────────────────────────────
@@ -121,7 +94,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 6,
     level: 'Beginner',
     views: 1240,
-    thumbnail: '🔐',
     urlFile: 'Log-in-and-Profile-Update-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-01-10',
@@ -139,7 +111,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 20,
     level: 'Beginner',
     views: 980,
-    thumbnail: '🖥️',
     urlFile: 'Platform-Overview-2025.pptx',
     isUrl: false,
     createdAt: '2025-01-15',
@@ -158,7 +129,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 8,
     level: 'Beginner',
     views: 2100,
-    thumbnail: '🏠',
     urlFile: 'How-to-Search-for-Properties-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-02-01',
@@ -176,7 +146,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 10,
     level: 'Intermediate',
     views: 1750,
-    thumbnail: '📋',
     urlFile: 'Forms-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-02-10',
@@ -194,7 +163,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 5,
     level: 'Intermediate',
     views: 890,
-    thumbnail: '💵',
     urlFile: 'Commission-Structure.pdf',
     isUrl: false,
     createdAt: '2025-03-01',
@@ -212,7 +180,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 3,
     level: 'Beginner',
     views: 1320,
-    thumbnail: '📝',
     urlFile: 'Property-Reservation-Form.pdf',
     isUrl: false,
     createdAt: '2025-03-05',
@@ -231,7 +198,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 14,
     level: 'Intermediate',
     views: 1560,
-    thumbnail: '🌐',
     urlFile: 'Wordpress-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-02-20',
@@ -249,7 +215,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 11,
     level: 'Intermediate',
     views: 1100,
-    thumbnail: '✏️',
     urlFile: 'Modify-Websites-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-03-10',
@@ -267,7 +232,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 9,
     level: 'Intermediate',
     views: 1380,
-    thumbnail: '🎯',
     urlFile: 'How-to-Create-Landing-Pages.mp4',
     isUrl: false,
     createdAt: '2025-03-15',
@@ -286,7 +250,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 7,
     level: 'Beginner',
     views: 2340,
-    thumbnail: '👤',
     urlFile: 'Clients-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-01-25',
@@ -304,7 +267,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 8,
     level: 'Beginner',
     views: 1890,
-    thumbnail: '🤝',
     urlFile: 'Referral-Partner-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-02-05',
@@ -322,7 +284,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 6,
     level: 'Beginner',
     views: 1450,
-    thumbnail: '🔄',
     urlFile: 'Updating-Referral-Partner-Info-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-02-12',
@@ -340,7 +301,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 4,
     level: 'Beginner',
     views: 760,
-    thumbnail: '✅',
     urlFile: 'Client-Onboarding-Checklist.pdf',
     isUrl: false,
     createdAt: '2025-03-20',
@@ -358,7 +318,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 5,
     level: 'Intermediate',
     views: 540,
-    thumbnail: '📄',
     urlFile: 'Referral-Partner-Agreement.docx',
     isUrl: false,
     createdAt: '2025-04-01',
@@ -377,7 +336,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 12,
     level: 'Intermediate',
     views: 1670,
-    thumbnail: '📧',
     urlFile: 'Mail-list-and-Email-Settings-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-02-28',
@@ -395,7 +353,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 9,
     level: 'Beginner',
     views: 1230,
-    thumbnail: '🎨',
     urlFile: 'Brochures-PIAB.mp4',
     isUrl: false,
     createdAt: '2025-03-08',
@@ -414,7 +371,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 16,
     level: 'Advanced',
     views: 2050,
-    thumbnail: '🤖',
     urlFile: 'BotInABox_2.mp4',
     isUrl: false,
     createdAt: '2025-04-05',
@@ -432,7 +388,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 22,
     level: 'Advanced',
     views: 890,
-    thumbnail: '⚙️',
     urlFile: 'https://youtu.be/90spU-LJt8M',
     isUrl: true,
     createdAt: '2025-04-10',
@@ -450,7 +405,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 3,
     level: 'Beginner',
     views: 1100,
-    thumbnail: '📋',
     urlFile: 'Property-Enquiry-Form.pdf',
     isUrl: false,
     createdAt: '2025-03-25',
@@ -468,7 +422,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 4,
     level: 'Intermediate',
     views: 670,
-    thumbnail: '💳',
     urlFile: 'Finance-Assessment-Form.pdf',
     isUrl: false,
     createdAt: '2025-04-02',
@@ -486,7 +439,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 8,
     level: 'Intermediate',
     views: 430,
-    thumbnail: '🔒',
     urlFile: 'Privacy-Policy.pdf',
     isUrl: false,
     createdAt: '2025-01-05',
@@ -505,7 +457,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 45,
     level: 'Intermediate',
     views: 3200,
-    thumbnail: '🏢',
     urlFile: 'https://www.youtube.com/watch?v=9aR4FLbrwEU',
     isUrl: true,
     createdAt: '2024-07-17',
@@ -523,7 +474,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 52,
     level: 'Advanced',
     views: 2780,
-    thumbnail: '📊',
     urlFile: 'https://www.youtube.com/watch?v=2vJqp6EkRrm',
     isUrl: true,
     createdAt: '2025-02-01',
@@ -542,7 +492,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 30,
     level: 'Intermediate',
     views: 1560,
-    thumbnail: '📖',
     urlFile: 'RE-Investment-Guide-2025.pdf',
     isUrl: false,
     createdAt: '2025-01-20',
@@ -560,7 +509,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 25,
     level: 'Advanced',
     views: 980,
-    thumbnail: '🏦',
     urlFile: 'SMSF-Property-Guide.pdf',
     isUrl: false,
     createdAt: '2025-02-15',
@@ -578,7 +526,6 @@ export const RESOURCES: Resource[] = [
     durationMin: 18,
     level: 'Beginner',
     views: 720,
-    thumbnail: '👔',
     urlFile: 'BDM-Onboarding.pptx',
     isUrl: false,
     createdAt: '2025-03-01',
