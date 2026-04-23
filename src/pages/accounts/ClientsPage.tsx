@@ -197,18 +197,6 @@ export default function ClientsPage() {
     setPage(1);
   }
 
-  const hasFilters =
-    firstName ||
-    lastName ||
-    state ||
-    stage ||
-    status ||
-    subscriber ||
-    salesAgent ||
-    referralPartner ||
-    affiliate ||
-    agent;
-
   // Visible columns in order
   const activeCols = ALL_COLUMNS.filter((c) => visibleCols.has(c.key));
 
