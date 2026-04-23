@@ -56,10 +56,10 @@ export default function FeaturedProperties({
         </button>
       </div>
 
-      <div className="divide-y divide-gray-50 max-h-[272px] overflow-y-auto">
+      <div className="divide-y divide-gray-50">
         {properties.map(p => (
-          <div key={p.id} className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50/60 transition-colors">
-            <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-md shrink-0 ${TYPE_COLORS[p.type] ?? 'bg-gray-100 text-gray-600'}`}>
+          <div key={p.id} className="grid grid-cols-[88px_minmax(0,1fr)_110px_86px] items-center gap-3 px-4 py-2.5 hover:bg-gray-50/60 transition-colors">
+            <span className={`inline-flex justify-center text-[10px] font-semibold px-2 py-0.5 rounded-md w-fit min-w-[74px] ${TYPE_COLORS[p.type] ?? 'bg-gray-100 text-gray-600'}`}>
               {p.type}
             </span>
             <div className="flex-1 min-w-0">
@@ -69,8 +69,10 @@ export default function FeaturedProperties({
                 <p className="text-[10px] text-gray-400 truncate">{p.location}</p>
               </div>
             </div>
-            <span className="text-xs font-semibold text-gray-700 shrink-0 hidden sm:block">{p.price}</span>
-            <StatusBadge variant={p.status}>{p.statusLabel}</StatusBadge>
+            <span className="text-xs font-semibold text-gray-700 text-right whitespace-nowrap">{p.price}</span>
+            <div className="flex justify-end">
+              <StatusBadge variant={p.status}>{p.statusLabel}</StatusBadge>
+            </div>
           </div>
         ))}
       </div>

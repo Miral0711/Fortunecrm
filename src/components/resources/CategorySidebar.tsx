@@ -32,6 +32,7 @@ interface Props {
   onSubcategoryChange: (sub: string) => void
   countFor?: (catId: string) => number
   countForSub?: (subId: string) => number
+  mode?: 'sidebar' | 'compact'
 }
 
 export default function CategorySidebar({
@@ -42,14 +43,24 @@ export default function CategorySidebar({
   onSubcategoryChange,
   countFor,
   countForSub,
+  mode = 'sidebar',
 }: Props) {
+  const isCompact = mode === 'compact'
+
   return (
-    <aside className="w-48 flex-shrink-0">
-      <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest px-2 mb-2">
+    <aside className={clsx('flex-shrink-0', isCompact ? 'w-full' : 'w-48')}>
+      <p className={clsx(
+        'text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-2',
+        isCompact ? '' : 'px-2'
+      )}>
         Categories
       </p>
 
-      <nav className="flex flex-col gap-0.5">
+      <nav className={clsx(
+        isCompact
+          ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5'
+          : 'flex flex-col gap-0.5'
+      )}>
         {categories.map(cat => {
           const isActive = activeCategory === cat.id
           return (
@@ -57,10 +68,15 @@ export default function CategorySidebar({
               <button
                 onClick={() => { onCategoryChange(cat.id); onSubcategoryChange('') }}
                 className={clsx(
-                  'w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-colors text-left group',
+                  'w-full flex items-center justify-between rounded-lg text-xs transition-colors text-left group',
+                  isCompact ? 'px-3 py-2 border' : 'px-2.5 py-1.5',
                   isActive
-                    ? 'bg-orange-50 text-orange-600 font-medium'
-                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+                    ? isCompact
+                      ? 'bg-orange-50 text-orange-600 border-orange-100 font-medium'
+                      : 'bg-orange-50 text-orange-600 font-medium'
+                    : isCompact
+                      ? 'text-gray-500 border-transparent hover:text-gray-700 hover:bg-gray-50 hover:border-gray-100'
+                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 )}
               >
                 <span className="flex items-center gap-2 min-w-0">
@@ -78,16 +94,22 @@ export default function CategorySidebar({
               </button>
 
               {isActive && cat.subcategories.length > 0 && (
-                <div className="ml-6 mt-0.5 mb-1 flex flex-col gap-0.5 border-l border-gray-100 pl-2.5">
+                <div className={clsx(
+                  isCompact
+                    ? 'mt-1 mb-0.5 flex flex-wrap gap-1'
+                    : 'ml-6 mt-0.5 mb-1 flex flex-col gap-0.5 border-l border-gray-100 pl-2.5'
+                )}>
                   {cat.subcategories.map(sub => (
                     <button
                       key={sub.id}
                       onClick={() => onSubcategoryChange(activeSubcategory === sub.id ? '' : sub.id)}
                       className={clsx(
-                        'w-full flex items-center justify-between py-1 px-1.5 rounded text-[11px] transition-colors text-left',
+                        isCompact
+                          ? 'flex items-center gap-1.5 py-1 px-2 rounded text-[11px] transition-colors text-left'
+                          : 'w-full flex items-center justify-between py-1 px-1.5 rounded text-[11px] transition-colors text-left',
                         activeSubcategory === sub.id
-                          ? 'text-orange-500 font-medium'
-                          : 'text-gray-400 hover:text-gray-600'
+                          ? isCompact ? 'text-orange-500 font-medium bg-orange-50' : 'text-orange-500 font-medium'
+                          : isCompact ? 'text-gray-400 hover:text-gray-600 hover:bg-gray-50' : 'text-gray-400 hover:text-gray-600'
                       )}
                     >
                       <span>{sub.label}</span>

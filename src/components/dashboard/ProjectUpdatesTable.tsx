@@ -31,6 +31,8 @@ interface Props {
   title?: string
   subtitle?: string
   onViewAll?: () => void
+  className?: string
+  tableClassName?: string
 }
 
 export default function ProjectUpdatesTable({
@@ -38,6 +40,8 @@ export default function ProjectUpdatesTable({
   title = 'Project Updates',
   subtitle = 'Lot creation & update activity',
   onViewAll,
+  className = '',
+  tableClassName = '',
 }: Props) {
   const columns: TableColumn<ProjectUpdate>[] = [
     {
@@ -67,7 +71,7 @@ export default function ProjectUpdatesTable({
   ]
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+    <div className={`bg-white rounded-xl border border-gray-100 shadow-sm transition-shadow overflow-hidden ${className}`}>
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
         <div>
           <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
@@ -80,7 +84,7 @@ export default function ProjectUpdatesTable({
           All Projects <ArrowUpRight className="w-3 h-3" />
         </button>
       </div>
-      <DataTable columns={columns} data={data} keyField="id" />
+      <DataTable columns={columns} data={data} keyField="id" className={tableClassName} />
     </div>
   )
 }

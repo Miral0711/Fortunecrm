@@ -31,7 +31,7 @@ export default function ListingsPage() {
   const types = ['All Types', ...new Set(listings.map(l => l.type))]
 
   return (
-    <PageWrapper>
+    <PageWrapper className="bg-white rounded-2xl border border-gray-100 p-4 md:p-5">
       {/* Page header removed */}
 
       {/* Search bar */}
@@ -41,7 +41,7 @@ export default function ListingsPage() {
             value={search}
             onChange={setSearch}
             placeholder="Search by project, location or keyword..."
-            className="w-full"
+            className="w-full [&>input]:h-11 [&>input]:rounded-xl [&>input]:py-0 [&>input]:pl-9 [&>svg]:left-3"
           />
         </div>
         <div className="flex items-center gap-2">
@@ -50,7 +50,7 @@ export default function ListingsPage() {
             <select
               value={project}
               onChange={(e) => setProject(e.target.value)}
-              className="w-full appearance-none pl-3 pr-8 py-2.5 text-sm bg-white border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer shadow-sm"
+              className="w-full h-11 appearance-none pl-3 pr-8 py-0 text-sm bg-white border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer shadow-sm"
             >
               {projects.map(p => <option key={p} value={p}>{p}</option>)}
             </select>
@@ -62,14 +62,14 @@ export default function ListingsPage() {
             <select
               value={propertyType}
               onChange={(e) => setPropertyType(e.target.value)}
-              className="w-full appearance-none pl-3 pr-8 py-2.5 text-sm bg-white border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer shadow-sm"
+              className="w-full h-11 appearance-none pl-3 pr-8 py-0 text-sm bg-white border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 cursor-pointer shadow-sm"
             >
               {types.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
             <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
           </div>
 
-          <button className="p-2.5 bg-white border border-gray-200 border-gray-100 rounded-xl text-gray-500 hover:text-gray-800 hover:border-gray-300 transition-all shadow-sm">
+          <button className="w-11 h-11 flex items-center justify-center bg-white border border-gray-200 rounded-xl text-gray-500 hover:text-gray-800 hover:border-gray-300 transition-all shadow-sm">
             <SlidersHorizontal className="w-4.5 h-4.5" />
           </button>
         </div>
@@ -103,7 +103,7 @@ export default function ListingsPage() {
 
       {/* Grid */}
       <div className={clsx(
-        'grid gap-4',
+        'grid gap-4 auto-rows-fr',
         viewMode === 'grid' ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' : 'grid-cols-1'
       )}>
         {filtered.map(item => (
@@ -185,7 +185,7 @@ function PropertyCard({ item, viewMode, onClick }: { item: any; viewMode: 'grid'
   return (
     <div
       onClick={onClick}
-      className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-orange-100 transition-all cursor-pointer flex flex-col"
+      className="group h-full bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-lg hover:border-orange-100 transition-all cursor-pointer flex flex-col"
     >
       <div className="relative h-48 bg-gray-100 overflow-hidden">
         <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />

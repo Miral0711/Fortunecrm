@@ -11,7 +11,7 @@ export default function Topbar({ title }: Props) {
 
   return (
     <header className="h-14 bg-white border-b border-gray-100 shrink-0 z-10">
-      <div className="max-w-[1400px] mx-auto w-full h-full flex items-center justify-between px-4 md:px-5">
+      <div className="w-full h-full flex items-center justify-between px-4 md:px-5">
         <div className="flex items-center gap-3">
           {showSearch ? (
             <input

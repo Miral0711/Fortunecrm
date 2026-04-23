@@ -110,7 +110,7 @@ export default function ResourcesPage() {
         </div>
 
         {/* Main layout */}
-        <div className="flex gap-5 items-start">
+        <div className="bg-white rounded-xl border border-gray-100 p-4 space-y-5">
           <CategorySidebar
             categories={CATEGORIES}
             activeCategory={activeCategory}
@@ -119,9 +119,10 @@ export default function ResourcesPage() {
             onSubcategoryChange={setActiveSubcategory}
             countFor={catId => catId === 'all' ? ALL_RESOURCES.length : ALL_RESOURCES.filter(r => r.category === catId).length}
             countForSub={subId => ALL_RESOURCES.filter(r => r.subcategory === subId).length}
+            mode="compact"
           />
 
-          <div className="flex-1 min-w-0 space-y-6">
+          <div className="space-y-6">
 
             {/* Recommended */}
             {showRecommended && !loading && (

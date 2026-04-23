@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { ChevronDown, ChevronLeft, ChevronRight, MoreVertical, Plus, ArrowUpDown } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import { ChevronDown, ChevronLeft, ChevronRight, MoreVertical, Plus, ArrowUpDown, Eye, Pencil, Trash2 } from 'lucide-react'
 import PageWrapper from '../components/layout/PageWrapper'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -115,6 +115,19 @@ export default function SalesPage() {
   const [showColPicker,   setShowColPicker]   = useState(false)
   const [sortKey,         setSortKey]         = useState<keyof Sale | ''>('')
   const [sortDir,         setSortDir]         = useState<'asc'|'desc'>('asc')
+  const [openActionMenuId, setOpenActionMenuId] = useState<string | null>(null)
+
+  useEffect(() => {
+    function handleOutsideClick(event: MouseEvent) {
+      const target = event.target as HTMLElement | null
+      if (!target?.closest('[data-sales-action-root]')) {
+        setOpenActionMenuId(null)
+      }
+    }
+
+    document.addEventListener('mousedown', handleOutsideClick)
+    return () => document.removeEventListener('mousedown', handleOutsideClick)
+  }, [])
 
   const filtered = useMemo(() => {
     return SALES.filter(s => {
@@ -162,14 +175,6 @@ export default function SalesPage() {
 
   return (
     <PageWrapper>
-
-      {/* Add button top-right */}
-      <div className="flex justify-end">
-        <button className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors shadow-sm">
-          <Plus className="w-4 h-4" /> Add
-        </button>
-      </div>
-
       {/* ── Filter Panel ── */}
       <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow px-5 py-4">
         <div className="grid grid-cols-3 gap-x-6 gap-y-4">
@@ -209,8 +214,11 @@ export default function SalesPage() {
           <StyledSelect label="BDM" value={bdm} onChange={setBdm}
             options={[]} placeholder="Select BDM" />
 
-          {/* Clear button aligned right */}
-          <div className="col-start-3 flex items-end justify-end">
+          {/* Form actions aligned right */}
+          <div className="col-start-3 flex items-end justify-end gap-2">
+            <button className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors shadow-sm">
+              <Plus className="w-4 h-4" /> Add
+            </button>
             <button
               onClick={clearFilters}
               className="px-5 py-2 text-sm font-medium text-white bg-orange-500 rounded-lg hover:bg-orange-600 transition-colors"
@@ -296,10 +304,44 @@ export default function SalesPage() {
                   key={sale.id}
                   className={`border-b border-gray-50 hover:bg-orange-50/30 transition-colors ${i % 2 === 0 ? '' : 'bg-gray-50/20'}`}
                 >
-                  <td className="px-3 py-3">
-                    <button className="text-gray-300 hover:text-gray-500 transition-colors">
-                      <MoreVertical className="w-3.5 h-3.5" />
-                    </button>
+                  <td className="px-3 py-3 relative">
+                    <div className="relative inline-block" data-sales-action-root>
+                      <button
+                        onClick={() => setOpenActionMenuId(current => current === sale.id ? null : sale.id)}
+                        className="text-gray-300 hover:text-gray-500 transition-colors"
+                        aria-haspopup="menu"
+                        aria-expanded={openActionMenuId === sale.id}
+                        title="Row actions"
+                      >
+                        <MoreVertical className="w-3.5 h-3.5" />
+                      </button>
+
+                      {openActionMenuId === sale.id && (
+                        <div className="absolute left-0 top-full z-30 mt-1.5 w-36 bg-white border border-gray-200 rounded-lg shadow-lg py-1">
+                          <button
+                            onClick={() => setOpenActionMenuId(null)}
+                            className="w-full flex items-center gap-2.5 px-3 py-2 text-left text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                          >
+                            <Eye className="w-3.5 h-3.5" />
+                            Detail
+                          </button>
+                          <button
+                            onClick={() => setOpenActionMenuId(null)}
+                            className="w-full flex items-center gap-2.5 px-3 py-2 text-left text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                          >
+                            <Pencil className="w-3.5 h-3.5" />
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => setOpenActionMenuId(null)}
+                            className="w-full flex items-center gap-2.5 px-3 py-2 text-left text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </td>
                   <td className="px-3 py-3 whitespace-nowrap">
                     <span className={STATUS_STYLES[sale.status] ?? 'text-gray-600 font-medium'}>

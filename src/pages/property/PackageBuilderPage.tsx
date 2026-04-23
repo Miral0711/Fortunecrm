@@ -131,6 +131,13 @@ export default function PackageBuilderPage() {
     return acc
   }, {} as Record<string, Inclusion[]>)
 
+  const setupProgress = [
+    { label: 'Lot selected', done: !!packageData.lot },
+    { label: 'Design selected', done: !!packageData.design },
+    { label: 'Facade selected', done: !!packageData.facade },
+    { label: 'Inclusions added', done: packageData.inclusions.length > 0 },
+  ]
+
   return (
     <div>
       <PageHeader
@@ -142,9 +149,9 @@ export default function PackageBuilderPage() {
         ]}
       />
 
-      <div className="grid grid-cols-5 gap-5">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
         {/* Left Panel - Builder */}
-        <div className="col-span-2 space-y-3">
+        <div className="xl:col-span-7 space-y-3">
           <div className="bg-white rounded-lg border border-gray-200 px-4 py-3">
             <h3 className="text-sm font-semibold text-gray-800">Create Package</h3>
             <p className="text-xs text-gray-500 mt-0.5">Configure your property package</p>
@@ -313,7 +320,7 @@ export default function PackageBuilderPage() {
         </div>
 
         {/* Right Panel - Preview */}
-        <div className="col-span-3">
+        <div className="xl:col-span-5">
           <div className="sticky top-5 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
             {/* Summary Header */}
             <div className="px-5 py-4 border-b border-gray-100">
@@ -342,6 +349,24 @@ export default function PackageBuilderPage() {
             <div className="p-5">
               {activeTab === 'floorplan' && (
                 <div className="space-y-4">
+                  <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
+                    <p className="text-xs font-semibold text-gray-700 mb-2">Package setup progress</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {setupProgress.map(item => (
+                        <div
+                          key={item.label}
+                          className={`px-2.5 py-2 rounded-md text-[11px] font-medium border ${
+                            item.done
+                              ? 'text-emerald-700 bg-emerald-50 border-emerald-200'
+                              : 'text-gray-500 bg-white border-gray-200'
+                          }`}
+                        >
+                          {item.label}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
                   {/* Selected Items */}
                   <div className="space-y-3">
                     {packageData.lot && (
@@ -402,6 +427,14 @@ export default function PackageBuilderPage() {
                     )}
                   </div>
 
+                  {!packageData.lot && !packageData.design && !packageData.facade && packageData.inclusions.length === 0 && (
+                    <div className="text-center py-2">
+                      <p className="text-xs text-gray-500">
+                        Start from the left panel to build your package.
+                      </p>
+                    </div>
+                  )}
+
                   {/* Total */}
                   <div className="pt-3 border-t border-gray-200">
                     <div className="flex items-center justify-between p-4 bg-orange-50 rounded-lg">
@@ -413,13 +446,13 @@ export default function PackageBuilderPage() {
               )}
 
               {activeTab === 'media' && (
-                <div className="text-center py-12">
+                <div className="text-center py-10">
                   <p className="text-sm text-gray-500">Media preview coming soon</p>
                 </div>
               )}
 
               {activeTab === 'documents' && (
-                <div className="text-center py-12">
+                <div className="text-center py-10">
                   <p className="text-sm text-gray-500">Documents preview coming soon</p>
                 </div>
               )}

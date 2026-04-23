@@ -20,7 +20,7 @@ export default function DataTable<T>({ columns, data, keyField, loading, onRowCl
             {columns.map(col => (
               <th
                 key={String(col.key)}
-                className={clsx('px-4 py-2.5 text-left text-xs font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap', col.className)}
+                className={clsx('px-3 py-2 text-left text-[11px] font-semibold text-gray-500 uppercase tracking-wide whitespace-nowrap', col.className)}
               >
                 {col.label}
               </th>
@@ -32,7 +32,7 @@ export default function DataTable<T>({ columns, data, keyField, loading, onRowCl
             Array.from({ length: 5 }).map((_, i) => (
               <tr key={i} className="border-b border-gray-50">
                 {columns.map(col => (
-                  <td key={String(col.key)} className="px-4 py-3">
+                  <td key={String(col.key)} className="px-3 py-2.5">
                     <div className="h-3 bg-gray-100 rounded animate-pulse w-3/4" />
                   </td>
                 ))}
@@ -55,7 +55,7 @@ export default function DataTable<T>({ columns, data, keyField, loading, onRowCl
                 )}
               >
                 {columns.map(col => (
-                  <td key={String(col.key)} className={clsx('px-4 py-3 text-gray-700', col.className)}>
+                  <td key={String(col.key)} className={clsx('px-3 py-2.5 text-gray-700', col.className)}>
                     {col.render ? col.render(row) : String((row as Record<string, unknown>)[String(col.key)] ?? '')}
                   </td>
                 ))}

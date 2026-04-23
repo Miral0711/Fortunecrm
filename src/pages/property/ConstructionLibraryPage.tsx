@@ -393,16 +393,10 @@ export default function ConstructionLibraryPage() {
           title="Construction Library"
           subtitle="Manage designs, facades, inclusions and pricing rules"
           breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Property', path: '/property/projects' }, { label: 'Construction Library' }]}
-          actions={
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium rounded-lg transition-colors">
-              <Plus className="w-3.5 h-3.5" />
-              Add Item
-            </button>
-          }
         />
 
         {/* Card wrapper */}
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+        <div className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden min-h-[calc(100vh-220px)] flex flex-col">
           {/* Tabs */}
           <div className="px-4 pt-1">
             <TabBar active={activeTab} onChange={t => setActiveTab(t)} />
@@ -445,6 +439,11 @@ export default function ConstructionLibraryPage() {
             />
 
             <div className="ml-auto flex items-center gap-2">
+              <button className="flex items-center gap-1.5 px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-xs font-medium rounded-lg transition-colors">
+                <Plus className="w-3.5 h-3.5" />
+                Add Item
+              </button>
+
               {/* Sort */}
               <SelectDropdown
                 label="Sort"
@@ -501,7 +500,7 @@ export default function ConstructionLibraryPage() {
           )}
 
           {/* Content */}
-          <div className="p-4">
+          <div className="p-4 flex-1">
             {filtered.length === 0 ? (
               <div className="py-16 flex flex-col items-center gap-3 text-center">
                 <div className="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
@@ -517,7 +516,7 @@ export default function ConstructionLibraryPage() {
                 </button>
               </div>
             ) : viewMode === 'grid' ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
                 {filtered.map(item => (
                   <ItemCard
                     key={item.id}

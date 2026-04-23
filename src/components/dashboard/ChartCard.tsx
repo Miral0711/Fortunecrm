@@ -8,8 +8,8 @@ interface Props {
 
 export default function ChartCard({ title, subtitle, actions, children, className = '' }: Props) {
   return (
-    <div className={`bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-4 ${className}`}>
-      <div className="flex items-start justify-between mb-4">
+    <div className={`bg-white rounded-xl border border-gray-100 shadow-sm transition-shadow p-3.5 ${className}`}>
+      <div className="flex items-start justify-between mb-3">
         <div>
           <h3 className="text-sm font-semibold text-gray-800">{title}</h3>
           {subtitle && <p className="text-xs text-gray-400 mt-0.5">{subtitle}</p>}

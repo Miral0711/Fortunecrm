@@ -83,7 +83,7 @@ export default function TasksCard({ tasks = defaultTasks }: Props) {
       )}
 
       {/* Task list */}
-      <div className="divide-y divide-gray-50 max-h-[272px] overflow-y-auto">
+      <div className="divide-y divide-gray-50">
         {items.length === 0 ? (
           <div className="py-10 text-center">
             <p className="text-xs text-gray-400">No tasks yet. Add one above.</p>

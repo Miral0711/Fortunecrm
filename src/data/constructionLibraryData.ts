@@ -89,6 +89,42 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     tags: ['townhouse', 'urban', 'rooftop'],
     status: 'draft', updatedAt: '2026-04-15',
   },
+  {
+    id: 'd6', tab: 'designs', name: 'Willow 21', category: 'Single Storey',
+    price: 259000, sku: 'DES-W21', supplier: 'Fortune Homes',
+    description: 'Functional single-storey family design with dedicated media room and oversized kitchen pantry.',
+    specs: { 'Bedrooms': '4', 'Bathrooms': '2', 'Garage': 'Double', 'Area': '210 m²', 'Width': '12.5 m', 'Depth': '21.2 m' },
+    icon: 'Home', iconColor: 'text-rose-500', iconBg: 'bg-rose-50',
+    tags: ['single-storey', 'media-room', 'family'],
+    status: 'active', updatedAt: '2026-04-18',
+  },
+  {
+    id: 'd7', tab: 'designs', name: 'Summit 39', category: 'Double Storey',
+    price: 468000, sku: 'DES-S39', supplier: 'Fortune Homes',
+    description: 'Premium double-storey plan featuring guest suite downstairs, butler pantry and upstairs retreat.',
+    specs: { 'Bedrooms': '5', 'Bathrooms': '3.5', 'Garage': 'Double', 'Area': '392 m²', 'Width': '13 m', 'Depth': '24.8 m' },
+    icon: 'Building2', iconColor: 'text-indigo-500', iconBg: 'bg-indigo-50',
+    tags: ['double-storey', 'premium', 'retreat'],
+    status: 'active', updatedAt: '2026-04-16',
+  },
+  {
+    id: 'd8', tab: 'designs', name: 'Laneway Duo 19', category: 'Duplex',
+    price: 476000, sku: 'DES-LD19', supplier: 'Fortune Homes',
+    description: 'Narrow-lot duplex concept with mirrored layouts, private courtyards and efficient circulation.',
+    specs: { 'Bedrooms': '3+3', 'Bathrooms': '2.5+2.5', 'Garage': 'Single x2', 'Area': '190 m² each', 'Width': '14.6 m', 'Depth': '18.3 m' },
+    icon: 'LayoutGrid', iconColor: 'text-fuchsia-500', iconBg: 'bg-fuchsia-50',
+    tags: ['duplex', 'narrow-lot', 'investment'],
+    status: 'active', updatedAt: '2026-04-06',
+  },
+  {
+    id: 'd9', tab: 'designs', name: 'Courtyard 16', category: 'Granny Flat',
+    price: 168000, sku: 'DES-C16', supplier: 'Fortune Homes',
+    description: 'Two-bedroom granny flat arranged around a private courtyard for improved light and ventilation.',
+    specs: { 'Bedrooms': '2', 'Bathrooms': '1', 'Garage': 'Carport', 'Area': '84 m²', 'Width': '8.6 m', 'Depth': '11.4 m' },
+    icon: 'Home', iconColor: 'text-emerald-500', iconBg: 'bg-emerald-50',
+    tags: ['granny-flat', 'courtyard', 'secondary-dwelling'],
+    status: 'draft', updatedAt: '2026-04-13',
+  },
 
   // Facades
   {
@@ -126,6 +162,24 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     icon: 'Mountain', iconColor: 'text-stone-500', iconBg: 'bg-stone-50',
     tags: ['limestone', 'luxury', 'natural-stone'],
     status: 'active', updatedAt: '2026-04-02',
+  },
+  {
+    id: 'f5', tab: 'facades', name: 'Urban Blade', category: 'Standard',
+    price: 9600, sku: 'FAC-UB05', supplier: 'Monocrete',
+    description: 'Minimal rendered facade with slim vertical blade walls and warm timber-look accents.',
+    specs: { 'Material': 'Acrylic Render', 'Accent': 'Timber-look Battens', 'Colour': 'Warm Grey', 'Warranty': '10 years' },
+    icon: 'PaintBucket', iconColor: 'text-cyan-500', iconBg: 'bg-cyan-50',
+    tags: ['minimal', 'render', 'urban'],
+    status: 'active', updatedAt: '2026-04-17',
+  },
+  {
+    id: 'f6', tab: 'facades', name: 'Stonecrest Entry', category: 'Luxury',
+    price: 27600, sku: 'FAC-SE06', supplier: 'Artisan Stone',
+    description: 'Feature stacked-stone entry tower with metal awning and premium lighting integration.',
+    specs: { 'Material': 'Stacked Stone', 'Feature': 'Entry Tower', 'Lighting': 'Integrated LED', 'Warranty': '20 years' },
+    icon: 'Gem', iconColor: 'text-violet-500', iconBg: 'bg-violet-50',
+    tags: ['stone', 'entry-feature', 'premium'],
+    status: 'draft', updatedAt: '2026-04-11',
   },
 
   // Inclusions
@@ -174,6 +228,24 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     tags: ['tapware', 'matte-black', 'plumbing'],
     status: 'active', updatedAt: '2026-04-03',
   },
+  {
+    id: 'i6', tab: 'inclusions', name: 'Smart Home Starter Pack', category: 'Electrical',
+    price: 2950, sku: 'INC-SHS01', supplier: 'Clipsal',
+    description: 'Starter smart-home package including app-controlled lighting switches and video doorbell.',
+    specs: { 'Devices': '12', 'Hub': 'Included', 'Control': 'iOS/Android', 'Warranty': '3 years' },
+    icon: 'Sun', iconColor: 'text-lime-500', iconBg: 'bg-lime-50',
+    tags: ['smart-home', 'electrical', 'automation'],
+    status: 'active', updatedAt: '2026-04-19',
+  },
+  {
+    id: 'i7', tab: 'inclusions', name: 'Designer Vanity Pack', category: 'Cabinetry',
+    price: 3350, sku: 'INC-DVP01', supplier: 'Polytec',
+    description: 'Premium vanity package with soft-close drawers, stone top and above-counter basin options.',
+    specs: { 'Cabinet': 'Moisture Resistant MDF', 'Top': '20mm Stone', 'Hardware': 'Soft-close', 'Sizes': '750/900/1200mm' },
+    icon: 'ChefHat', iconColor: 'text-pink-500', iconBg: 'bg-pink-50',
+    tags: ['vanity', 'bathroom', 'cabinetry'],
+    status: 'draft', updatedAt: '2026-04-12',
+  },
 
   // Pricing Rules
   {
@@ -202,6 +274,15 @@ export const LIBRARY_ITEMS: LibraryItem[] = [
     icon: 'Tag', iconColor: 'text-purple-500', iconBg: 'bg-purple-50',
     tags: ['facade', 'prime-cost', 'upgrade'],
     status: 'active', updatedAt: '2026-04-14',
+  },
+  {
+    id: 'pr4', tab: 'pricing-rules', name: 'High Wind Region Compliance', category: 'Fixed Price',
+    price: 3800, sku: 'PR-HWR01', supplier: undefined,
+    description: 'Compliance uplift for homes in designated high wind regions requiring upgraded tie-down systems.',
+    specs: { 'Trigger': 'Wind Region C', 'Type': 'Fixed Uplift', 'Applies To': 'Selected Postcodes', 'GST': 'Inclusive' },
+    icon: 'TrendingUp', iconColor: 'text-sky-600', iconBg: 'bg-sky-50',
+    tags: ['compliance', 'wind-region', 'structural'],
+    status: 'active', updatedAt: '2026-04-20',
   },
 ]
 
