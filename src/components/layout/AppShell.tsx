@@ -26,13 +26,15 @@ export default function AppShell() {
   const [collapsed, setCollapsed] = useState(false)
   const location = useLocation()
   const title = getPageTitle(location.pathname)
+  const isStaticPropertyDashboardPage =
+    location.pathname === '/property/projects' || location.pathname === '/property/lots'
 
   return (
     <div className="flex h-screen overflow-hidden bg-[#f4f5f7]">
       <Sidebar collapsed={collapsed} onToggle={() => setCollapsed(c => !c)} />
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Topbar title={title} />
-        <main className="flex-1 overflow-y-auto p-3 md:p-4">
+        <main className={`flex-1 p-3 md:p-4 ${isStaticPropertyDashboardPage ? 'overflow-hidden' : 'overflow-y-auto'}`}>
           <Outlet />
         </main>
       </div>

@@ -25,8 +25,8 @@ import WebsitePage from './pages/marketing/WebsitePage'
 import BrochuresPage from './pages/marketing/BrochuresPage'
 
 // Property
-import ProjectsPage from './pages/property/ProjectsPage'
-import LotsPage from './pages/property/LotsPage'
+import ProjectsPage from './pages/property/ProjectsDashboardPage'
+import LotsPage from './pages/property/LotsDashboardPage'
 import PackageBuilderPage from './pages/property/PackageBuilderPage'
 
 // Construction Library

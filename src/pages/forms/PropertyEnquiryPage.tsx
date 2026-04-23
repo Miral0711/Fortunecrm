@@ -141,25 +141,25 @@ export default function PropertyEnquiryPage() {
       <PageHeader
         title="Property Enquiry"
         subtitle="Incoming property enquiry forms"
-        actions={
+      />
+
+      {/* Filter Card */}
+      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-4">
+        <div className="flex items-center justify-end mb-4">
           <button
             onClick={() => navigate('/forms/property-enquiry/create')}
             className="flex items-center gap-1.5 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
-            Add
+            Create Enquiry
           </button>
-        }
-      />
-
-      {/* Filter Card */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mb-4">
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <SelectField label="Agent"  options={AGENTS}   value={agent}  onChange={v => { setAgent(v);  setPage(1) }} />
           <SelectField label="Client" options={CLIENTS}  value={client} onChange={v => { setClient(v); setPage(1) }} />
           <SelectField label="Status" options={STATUSES} value={status} onChange={v => { setStatus(v); setPage(1) }} />
         </div>
-        <div className="flex justify-end mt-4">
+        <div className="flex justify-end items-center gap-2 mt-4">
           <button
             onClick={handleClear}
             className="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-colors"
